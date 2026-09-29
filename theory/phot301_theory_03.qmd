@@ -1,0 +1,1153 @@
+---
+title: "PHOT 301: Quantum Photonics"
+subtitle: "LECTURE 03"
+author: "Michaël Barbier, Fall (2025-2026)"
+#date: today
+#date-format: long
+execute:
+  echo: true
+  output: true
+  warning: true
+  error: true
+  code-overflow: wrap
+  code:
+    font-size: 40px
+format:
+  revealjs:
+    #font-family-sans-serif: Palatino
+    fontsize: 28px
+    template-partials:
+      - title-slide.html
+    center-title-slide: true
+    margin: 0.05
+    #output-location: column-fragment
+    #smaller: true
+    footer: "[Lecture 03: The Harmonic Oscillator (ctu'd)]{style=color:darkred;}"
+    slide-number: true
+    show-slide-number: all
+    highlight-style: tango
+    #theme: simple
+    theme: [default, custom.scss]
+    #chalkboard: true
+    self-contained: true
+    embed-resources: true
+editor: source
+jupyter: python3
+---
+
+
+## Overview
+
+![](./figures/fig_schedule_lecture.png)
+
+## For next week
+
+- Textbook Chapter 2: 2.10, 2.11, 2.13, 2.14
+
+- Homework documents:
+  - phot301_homework_matrices.pdf
+  - phot301_homework_system_of_equations.pdf
+
+## Review: Infinite well
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+**Time-independent solutions**:
+
+- Eigenstates and eigenenergies
+- Quantum number $n$
+
+$$
+ \left\{
+\begin{aligned}
+\psi_n(x) &= \sqrt{\frac{2}{L}} \sin\left(\frac{n\pi x}{L}\right)\\
+&\\
+E_n &= \frac{\hbar^2 k_n^2}{2m} = \frac{\hbar^2}{2m} \left( \frac{n\pi}{L} \right)^2\\
+&\\
+n &= 1, 2, 3, 4, \dots\\
+\end{aligned}
+\right.
+$$
+
+*Plot shows the wave function ($\psi$, grey), probability ($|\psi|^2$, color) for first 3 eigenstates*
+
+:::
+
+::: {.column width="50%"}
+
+``` {python}
+#| echo: false
+import matplotlib.pyplot as plt
+import numpy as np
+from numpy import pi, sin, linspace, sqrt
+
+# Parameters
+#
+# Width of the well
+a = 1.0
+# Largest eigenstate energy-level
+N = 3
+
+# Compute the eigenfunctions
+x = linspace(0, a, 400)
+psi_n = [ sqrt(2/a) * sin(n * pi / a * x) for n in range(1, N+1)]
+E_n = [ n ** 2 for n in range(1, N+1)]
+
+# Plot eigenfunctions
+fig, ax = plt.subplots(1, 1, figsize=(5, 6))
+for n in range(N):
+    ax.plot(x, E_n[n] + psi_n[n], color="gray", linewidth=0.5)
+    ax.hlines(E_n[n], 0, 1, linestyle='dashed', color="gray")
+    ax.plot(x, E_n[n] + psi_n[n]**2)
+ax.set_xlabel("x")
+ax.set_ylim([0,12])
+ax.set_xlim([-0.1, 1.1])
+ax.hlines([0], 0, 1, color="gray")
+ax.vlines([0, 1], 0, 12, color="gray")
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.spines['left'].set_visible(False)
+ax.set_xlabel(r"$x$")
+ax.set_ylabel(r"$V(x)$ (in $2m L^2/\hbar^2\pi^2$)")
+ax.set_xticks([0, 1], ["0", "L"])
+#ax.legend()
+plt.show()
+```
+
+:::
+
+::::
+
+## Review: Quantization by spacial constraints 
+
+Energy-levels $E_n$ proportional with **$\,\,\frac{1}{L^2}\,\,$** and $\,\,n^2$
+
+$$
+\begin{aligned}
+E_n = \frac{\hbar^2 \pi^2 n^2}{2mL^2}, \qquad E_1 = \frac{\hbar^2 \pi^2}{2mL^2}, \qquad E_n = n^2 E_1\\
+\end{aligned}
+$$
+
+![](/figures/fig_infinite_well_L_dependency.png)
+
+
+## Review: Superposition of stationary solutions
+
+:::: {.columns}
+
+::: {.column width="55%"}
+
+For the infinite well
+
+$$
+\psi(x) = \sqrt{\frac{2}{L}} \sum_{n = 1}^\infty c_n \sin\left(\frac{n\pi}{L} x\right)
+$$
+
+Example state: 
+$$
+\left\{
+\begin{aligned}
+& c_1 = 4/5,\\
+& c_2 = \sqrt{1 - c_1^2} = 3/5,\\
+& n > 2 \longrightarrow c_n = 0\\
+\end{aligned}
+\right.
+$$
+
+- What if we let time evolve?
+
+:::
+
+::: {.column width=45%}
+
+``` {python}
+#| echo: false
+import matplotlib.pyplot as plt
+import numpy as np
+from numpy import pi, sin, linspace, sqrt
+
+# Parameters
+#
+# Width of the well
+a = 1.0
+# Largest eigenstate energy-level
+N = 2
+
+# Compute the eigenfunctions
+x = linspace(0, a, 400)
+psi_n = [ sqrt(2/a) * sin(n * pi / a * x) for n in range(1, N+1)]
+E_n = [ n ** 2 for n in range(1, N+1)]
+c_n = [4/5, 3/5]
+
+# Plot eigenfunctions
+fig, ax = plt.subplots(2, 1, figsize=(5, 7))
+for n in range(N):
+    ax[1].plot(x, E_n[n] + c_n[n]*psi_n[n], color="gray", linewidth=0.5)
+    ax[1].hlines(E_n[n], 0, 1, linestyle='dashed', color="gray")
+    ax[1].plot(x, E_n[n] + c_n[n]**2*psi_n[n]**2)
+
+ax[1].set_ylim([0,7])
+ax[1].set_xlim([-0.1, 1.1])
+ax[1].hlines([0], 0, 1, color="gray")
+ax[1].vlines([0, 1], 0, 7, color="gray")
+ax[1].spines['top'].set_visible(False)
+ax[1].spines['right'].set_visible(False)
+ax[1].spines['bottom'].set_visible(False)
+ax[1].spines['left'].set_visible(False)
+ax[1].set_xlabel(r"$x$")
+ax[1].set_ylabel(r"$V(x)$")
+ax[1].set_xticks([0, 1], ["0", "L"])
+
+ax[0].plot(x, (c_n[0]*psi_n[0] + c_n[1]*psi_n[1]), color="gray", linewidth=0.5)
+ax[0].plot(x, (c_n[0]*psi_n[0] + c_n[1]*psi_n[1])**2)
+
+ax[0].set_ylim([-0.5,3])
+ax[0].set_xlim([-0.1, 1.1])
+ax[0].hlines([0], 0, 1, color="gray")
+ax[0].vlines([0, 1], 0, 12, color="gray")
+ax[0].spines['top'].set_visible(False)
+ax[0].spines['right'].set_visible(False)
+ax[0].spines['bottom'].set_visible(False)
+ax[0].spines['left'].set_visible(False)
+ax[0].set_ylabel(r"$V(x)$")
+ax[0].set_xticks([])
+
+plt.show()
+```
+
+:::
+
+::::
+
+## Review: Adding the time-dependency
+
+:::: {.columns}
+
+::: {.column width="55%"}
+
+Add $e^{-iE_n/\hbar}$ to each eigenstate:
+
+$$
+\Psi(x, t) = \sum_{n = 1}^\infty c_n \color{blue}{\psi_n(x)} \, \color{red}{e^{-iE_n/\hbar}}
+$$
+
+For the infinite well:
+
+$$
+\Psi(x, t) = \sqrt{\frac{2}{L}} \sum_{n = 1}^\infty c_n \color{blue}{\sin\left(\frac{n\pi}{L} x\right)} \, \color{red}{e^{-iE_n/\hbar}}
+$$
+
+
+- The wave function $\Psi(x,t)$ is complex-valued
+- Probability density $|\Psi(x,t)|^2$ is real-valued
+
+
+:::
+
+::: {.column width=45%}
+
+![](/movie.gif)
+
+:::
+
+::::
+
+
+## Review: Properties of stationary eigenstates
+
+$$
+\begin{aligned}
+\psi_n \textrm{ are orthonormal}\quad & \int \psi_m(x)^* \, \psi_n(x) \, dx = \delta_{mn}\\
+\psi_n \textrm{ form a complete basis}\quad & f(x) = \sum_{n = 1}^\infty c_n \psi_n(x) \qquad \forall f(x)\\
+\textrm{Coefficients $c_n$ are given by}\quad & c_n = \int \psi_n(x)^* \, f(x) \, dx\\
+\end{aligned}
+$$
+
+Coefficients $|c_n|^2$ give the probability to measure energy as $E_n$:
+
+$$
+\langle \hat{H} \rangle = \int \Psi^* \hat{H} \Psi dx = \sum_{n = 1}^\infty |c_n|^2 E_n
+$$
+
+Expectation values for operators $\hat{x}$, $\hat{p}$, etc.
+
+$$
+\langle \hat{x} \rangle(t) = \int \Psi^* \hat{x} \Psi \, dx = \int x |\Psi|^2 \, dx
+$$
+
+
+## Review: Observables & measurements 
+
+![](/figures/fig_observables_well_collapse_x.png)
+
+## Review: Observables & measurements 
+
+![](/figures/fig_observables_well_collapse_E.png)
+
+
+# Harmonic oscillator
+
+## Introduction
+
+:::: {.columns}
+
+::: {.column width=50%}
+
+- Ball-spring problem
+- Analog RCL electric circuit
+- Many systems are (approximately) harmonic     oscillators 
+    - Optical cavity
+    - **2nd order Taylor approximation $V(x)$**
+    - Phonons, vibrations in molecules/matter
+- **Quantization of light: Photons**
+
+:::
+
+::: {.column width=50%}
+
+![](/figures/fig_harmonic_oscillator_taylor.png)
+
+:::
+
+::::
+
+
+## Classical harmonic oscillator: parabolic well
+
+:::: {.columns}
+
+::: {.column width=60%}
+
+- Mass in parabolic well $V(x) = \alpha mgx^2$
+- Restoring force: $F = -\frac{dV(x)}{dx} = -2\alpha mgx$
+- Motion via Newton's equation $F = m a$:
+
+$$
+m a = m \frac{d^2x}{dt^2} = - 2\alpha mgx
+$$
+
+Linear equation with constant coefficients
+
+$$
+\frac{d^2x}{dt^2} = - 2\alpha g x = -\omega^2 x, \textrm{ with } \omega = \sqrt{2\alpha g}.
+$$
+
+Resulting solutions are: $\quad x \propto \sin(\omega t)$
+
+Turning points at $\pm x_\textrm{max}$: $\quad\alpha m g x_\textrm{max}^2 = \frac{1}{2} m v_0^2$
+
+:::
+
+::: {.column width=40%}
+
+![](/figures/fig_harmonic_oscillator_classical_ball.png)
+
+:::
+
+::::
+
+
+## Classical harmonic oscillator: ball-spring
+
+:::: {.columns}
+
+::: {.column width=60%}
+
+- mass attached to a spring
+- Restoring force: $F = -\frac{dV(x)}{dx} = -k x$
+- Motion via Newton's equation $F = m a$:
+
+$$
+m a = m \frac{d^2x}{dt^2} = -k' x
+$$
+
+Linear equation with constant coefficients
+
+$$
+\frac{d^2x}{dt^2} = - \frac{k}{m} x = -\omega^2 x, \textrm{ with } \omega = \sqrt{k'/m}.
+$$
+
+Resulting solutions are: $\quad x \propto \sin(\omega t)$
+
+Turning points at $\pm x_\textrm{max}$: $\quad\frac{1}{2} k' x_\textrm{max}^2 = \frac{1}{2} m v_0^2$
+
+:::
+
+::: {.column width=40%}
+
+![](/figures/fig_harmonic_oscillator_classical_spring.png)
+
+:::
+
+::::
+
+
+## Quantum harmonic osc.: diatomic molecule
+
+:::: {.columns}
+
+::: {.column width=50%}
+
+- **Vibrations** approximate harmonic oscillator
+- Restoring force: $F = -\frac{dV(x)}{dx} = -k' x$
+- Schrodinger equation with potential: 
+
+$$
+V(x) = -\frac{1}{2} k' x^2
+$$
+
+$$
+\left\{
+\begin{aligned}
+&\textrm{Quantization energy-levels}\\
+&\textrm{Groundstate nonzero energy}\\
+&\textrm{Time-evolution }\,\,\rho(x,t) = |\Psi(x,t)|^2\\
+\end{aligned}
+\right.
+$$
+
+:::
+
+::: {.column width=50%}
+
+![](/figures/fig_harmonic_oscillator_classical_diatomic.png)
+
+:::
+
+::::
+
+
+## Solving the QM harmonic oscillator
+
+The time-independent Schrodinger equation (TISE):
+
+$$
+-\frac{\hbar^2}{2m} \frac{\partial^2}{\partial x^2}\psi(x) + V(x) \psi(x) = E \psi
+$$
+
+::: fragment
+
+Potential energy: $V(x) = \frac{1}{2}m\omega^2 x^2$
+
+$$
+-\frac{\hbar^2}{2m} \frac{\partial^2}{\partial x^2}\psi(x) + \frac{1}{2}m\omega^2 x^2 \psi(x) = E \psi
+$$
+
+:::
+
+::: fragment
+
+Rewrite in dimensionless units: $\xi = \sqrt{\frac{m\omega}{\hbar}}$
+
+$$
+\frac{1}{2} \frac{\partial^2}{\partial \xi^2}\psi(\xi) - \frac{1}{2} \xi^2 \psi(\xi) = -\frac{E}{\hbar \omega} \psi
+$$
+
+$\longrightarrow$ 2nd order linear differential equation
+
+:::
+
+## Solving the QM harmonic oscillator
+
+$$
+\frac{1}{2} \frac{\partial^2}{\partial \xi^2}\psi(\xi) - \frac{1}{2} \xi^2 \psi(\xi) = -\frac{E}{\hbar \omega} \psi
+$$
+
+**Standard method** to solve differential equation
+
+**STEP 1**: Try to find asymptotic solutions
+
+$$
+\lim_{\xi\longrightarrow\infty} \quad \Rightarrow\quad \frac{E}{\hbar \omega} \ll \frac{1}{2} \xi^2
+$$
+
+$$
+\Rightarrow \frac{\partial^2}{\partial \xi^2}\psi(\xi) \approx \xi^2 \psi(\xi) \qquad \Rightarrow \qquad \psi \propto \exp(-\xi^2/2)
+$$
+
+::: fragment
+
+**STEP 2**: Trial solution to **hopefully simplify** the equation
+
+$$
+\psi(x) = \exp(-\xi^2/2) H(\xi), \qquad \textrm{where solutions}\,\,\,H(\xi)\,\,\,\textrm{are yet unknown}
+$$
+
+:::
+
+## Solving the QM harmonic oscillator
+
+**STEP 2**: Trial solution to **hopefully simplify** the equation
+
+Fill in trial solution $\psi = \exp(-\xi^2/2) H(\xi)$ in the original equation.
+
+$$
+\frac{1}{2} \frac{\partial^2}{\partial \xi^2}\psi(\xi) - \frac{1}{2} \xi^2 \psi(\xi) = -\frac{E}{\hbar \omega} \psi
+$$
+
+(and we multiply equation by $2$)
+
+$$
+\frac{\partial^2}{\partial \xi^2}\left[e^{-\xi^2/2} H(\xi)\right] - \xi^2 e^{-\xi^2/2} H(\xi) = -\frac{2E}{\hbar \omega} e^{-\xi^2/2} H(\xi)
+$$
+
+Then calculate 2nd derivative ($f'(x) = \partial f(x)/\partial x$): 
+
+$$
+\begin{aligned}
+\left[e^{-\xi^2/2} H(\xi)\right]'' &= \left[- \xi e^{-\xi^2/2} H(\xi) + e^{-\xi^2/2} H(\xi)\right]'\\
+&= -e^{-\xi^2/2} H(\xi) + \xi^2 e^{-\xi^2/2} H(\xi) - 2 \xi e^{-\xi^2/2} H'(\xi) + e^{-\xi^2/2} H''(\xi)\\
+\end{aligned}
+$$
+
+## Solving the QM harmonic oscillator
+
+**STEP 2**: Trial solution to **hopefully simplify** the equation
+
+$$
+e^{-\xi^2/2} H''(\xi) - 2 \xi e^{-\xi^2/2} H'(\xi) = \left(1 - \frac{2E}{\hbar\omega}\right)\, e^{-\xi^2/2} H(\xi)
+$$
+
+Divide by $e^{-\xi^2/2}$
+
+$$
+H''(\xi) - 2 \xi H'(\xi) = \left(1 - \frac{2E}{\hbar\omega}\right)\, H(\xi)
+$$
+
+Define dimensionless $K \equiv \frac{2E}{\hbar\omega}$
+
+$$
+H''(\xi) - 2 \xi H'(\xi) + \left(K - 1\right)\, H(\xi) = 0
+$$
+
+New differential equation: **Simpler?**
+
+
+## Solving the QM harmonic oscillator
+
+**STEP 3**: Solve by power series expansion
+
+\
+
+$$
+H''(\xi) - 2 \xi H'(\xi) + \left(K - 1 \right)\, H(\xi) = 0
+$$
+
+Assume $H(\xi) = a_0 + a_1 \xi + a_2 \xi^2 + a_3 \xi^3 + \dots = \sum_n a_{j=0}^\infty a_j \xi^j$
+
+
+$$
+\left\{
+\begin{aligned}
+H(\xi) &= a_0 + a_1 \xi + a_2 \xi^2 + a_3 \xi^3 + \dots = \sum_{j=0}^\infty a_j \xi^j\\
+H'(\xi) &= a_1 + 2 a_2 \xi + 3 a_3 \xi^2 + \dots = \sum_{j=0}^\infty (j+1) a_{j+1} \xi^{j}\\
+H''(\xi) &= 2 a_2 + 6 a_3 \xi + \dots = \sum_{j=0}^\infty (j+2)(j+1) a_{j+2} \xi^{j}\\
+\end{aligned}
+\right.
+$$
+
+Then fill in the power series in the equation
+
+## Solving the QM harmonic oscillator
+
+**STEP 3**: Solve by power series expansion
+
+$$
+H''(\xi) - 2 \xi H'(\xi) + \left(K - 1 \right)\, H(\xi) = 0
+$$
+
+
+$$
+\left\{
+\begin{aligned}
+H(\xi) &= a_0 + a_1 \xi + a_2 \xi^2 + a_3 \xi^3 + \dots = \sum_{j=0}^\infty a_j \xi^j\\
+H'(\xi) &= a_1 + 2 a_2 \xi + 3 a_3 \xi^2 + \dots = \sum_{j=0}^\infty (j+1) a_{j+1} \xi^{j}\\
+H''(\xi) &= 2 a_2 + 6 a_3 \xi + \dots = \sum_{j=0}^\infty (j+2)(j+1) a_{j+2} \xi^{j}\\
+\end{aligned}
+\right.
+$$
+
+Then fill in the power series in the equation:
+
+$$
+\sum_{j=0}^\infty\left[ (j+2)(j+1) a_{j+2}  - 2 j a_{j} + \left(K - 1 \right)\, a_j \right] \xi^{j} = 0
+$$
+
+
+## Solving the QM harmonic oscillator
+
+**STEP 3**: Solve by power series expansion
+
+$$
+\sum_{j=0}^\infty\left[ (j+2)(j+1) a_{j+2}  - 2 j a_{j} + \left(K - 1 \right)\, a_j \right] \xi^{j} = 0
+$$
+
+For every power of $\xi$ equation needs to be zero
+
+$$
+(j+2)(j+1) a_{j+2}  - 2 j a_{j} + \left(K - 1 \right)\, a_j = 0
+$$
+
+Solve for coefficients:
+
+$$
+a_{j+2} = \frac{2 j + 1 - K}{(j+2)(j+1)}\, a_j = 0
+$$
+
+If we know $a_0$ (even series) and $a_1$ (odd series) we know all $a_n$
+
+## Solving the QM harmonic oscillator
+
+**STEP 3**: Solve by power series expansion
+
+One problem: we require 
+
+$$
+\lim_{\xi\longrightarrow\infty} e^{\xi^2/2} H(\xi) = 0
+$$
+
+This is not the case for our infinite series.
+
+\
+
+**UNLESS the series terminates**: $\qquad \exists j: \quad 2 j + 1 - K = 0$
+
+\
+
+
+Solutions exist for $K - 1 = \frac{2E}{\hbar\omega} - 1 = 2n, \qquad n = 0, 1, 2, 3 \dots$ 
+
+$$
+\longrightarrow \quad \left\{
+\begin{aligned} \psi_n &= A_n \exp(-\xi^2/2) H_n(\xi), \\ 
+&\\
+E_n &= (n + 1/2) \hbar \omega \,\,\, \textrm{with} \,\, n = 0, 1, 2, \dots\\
+\end{aligned}
+\right.
+$$
+
+
+## Harmonic oscillator solutions
+
+$$
+\left\{
+\begin{aligned} 
+\psi_n &= A_n \exp(-\xi^2/2) H_n(\xi),\\
+E_n &= \left(n + \frac{1}{2}\right) \hbar \omega \,\,\, \textrm{with} \,\, n = 0, 1, 2, \dots\\
+A_n &= \sqrt{\frac{1}{\sqrt{\pi}2^n n!}} \qquad \xi = \sqrt{\frac{m \omega}{\hbar}}
+\end{aligned}
+\right.
+$$
+
+Hermite polynomials $\, H_n(\xi)\,$ (our even/odd power series)
+
+$$
+\begin{aligned} 
+H_0 &= 1\\
+H_1 &= 2\xi\\
+H_2 &= 4\xi^2 - 2\\
+H_3 &= 8\xi^3 - 12\xi\\
+\vdots \,\, &  \\
+H_n(\xi) &= 2\xi H_{n-1}(\xi) - 2(n-1) H_{n-2}(\xi)\\
+\end{aligned}
+$$
+
+
+## Harmonic oscillator solutions
+
+Solutions for the wave function:
+
+$$
+\psi_n(x) = \color{green}{\frac{1}{\sqrt{2^n \, n!}} \, \left(\frac{m\omega}{\pi \hbar}\right)^{1/4}} \, \color{red}{H_n\left(\sqrt{\frac{m\omega}{\hbar}} \,x\right)} \, \color{blue}{e^{-\frac{m\omega}{2\hbar}\,x^2}}
+$$
+
+:::: {.columns}
+
+::: {.column width=50%}
+
+
+- $\color{blue}{\textrm{Gaussian}}$
+- $\color{green}{\textrm{Normalization}}$
+- $\color{red}{\textrm{Hermite polynomials}}\,\,\,\color{red}{H_n(\xi)}$
+
+$$
+\begin{aligned} 
+\color{red}{H_0} &\color{red}{= 1}\\
+\color{red}{H_1} &\color{red}{= 2\xi}\\
+\color{red}{H_2} &\color{red}{= 4\xi^2 - 2}\\
+\color{red}{H_3} &\color{red}{= 8\xi^3 - 12\xi}\\
+\color{red}{\vdots} \,\, &  \\
+\end{aligned}
+$$
+
+:::
+
+::: {.column width=50%}
+
+``` {python}
+#| echo: false
+import matplotlib.pyplot as plt
+import numpy as np
+from math import factorial
+from numpy import pi, sin, linspace, sqrt, exp
+
+# Parameters
+#
+# Width of the well
+a = 1.0
+# Largest eigenstate energy-level
+N = 3
+
+# Compute the eigenfunctions
+x = linspace(-4, 4, 400)
+A_n = [np.sqrt(1/(sqrt(pi)*2**n*factorial(n))) for n in range(N+1)]
+H_n = [1, 2*x, 4*x**2 - 2, 8*x**3 - 12*x]
+psi_n = [ A_n[n] * exp(-x**2/2) * H_n[n] for n in range(N+1)]
+E_n = [(n + 1/2) for n in range(N+1)]
+
+
+# Plot eigenfunctions
+fig, ax = plt.subplots(1, 1, figsize=(5, 4))
+for n in range(N+1):
+    ax.plot(x, E_n[n] + psi_n[n], linewidth=2)
+    ax.hlines(E_n[n], -4, 4, linestyle='dashed', color="gray")
+    #ax.plot(x, E_n[n] + psi_n[n]**2)
+
+ax.plot(x, 1/2*x**2, color="gray")
+ax.set_ylim([0, 5])
+ax.set_xlim([-4, 4])
+#ax.hlines([0], 0, 1, color="gray")
+#ax[1].vlines([0, 1], 0, 7, color="gray")
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+#ax.spines['bottom'].set_visible(False)
+#ax.spines['left'].set_visible(False)
+ax.set_xlabel(r"$\xi$")
+ax.set_ylabel(r"$V(\xi)$")
+for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] + ax.get_xticklabels() + ax.get_yticklabels()):
+  item.set_fontsize(20)
+#ax.set_xticks([0, 1], ["0", "L"])
+
+plt.show()
+```
+
+:::
+
+::::
+
+## Harmonic oscillator solutions
+
+$$
+\textrm{Wave function}\quad \psi(\xi) \qquad\qquad\qquad \textrm{Probability density function}\quad |\psi(\xi)|^2
+$$
+
+``` {python}
+#| echo: false
+import matplotlib.pyplot as plt
+import numpy as np
+from math import factorial
+from numpy import pi, sin, linspace, sqrt, exp
+
+# Parameters
+#
+# Width of the well
+a = 1.0
+# Largest eigenstate energy-level
+N = 3
+
+# Compute the eigenfunctions
+x = linspace(-4, 4, 400)
+A_n = [np.sqrt(1/(sqrt(pi)*2**n*factorial(n))) for n in range(N+1)]
+H_n = [1, 2*x, 4*x**2 - 2, 8*x**3 - 12*x]
+psi_n = [ A_n[n] * exp(-x**2/2) * H_n[n] for n in range(N+1)]
+E_n = [(n + 1/2) for n in range(N+1)]
+
+
+fig, axs = plt.subplots(1, 2, figsize=(15, 6))
+# Plot eigenfunctions
+ax = axs[0]
+for n in range(N+1):
+    ax.plot(x, E_n[n] + psi_n[n], linewidth=2)
+    ax.hlines(E_n[n], -4, 4, linestyle='dashed', color="gray")
+    #ax.plot(x, E_n[n] + psi_n[n]**2)
+
+ax.plot(x, 1/2*x**2, color="gray")
+ax.set_ylim([0, 5])
+ax.set_xlim([-4, 4])
+#ax.hlines([0], 0, 1, color="gray")
+#ax[1].vlines([0, 1], 0, 7, color="gray")
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+#ax.spines['bottom'].set_visible(False)
+#ax.spines['left'].set_visible(False)
+ax.set_xlabel(r"$\xi$")
+ax.set_ylabel(r"$V(\xi)$")
+for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] + ax.get_xticklabels() + ax.get_yticklabels()):
+  item.set_fontsize(20)
+#ax.set_xticks([0, 1], ["0", "L"])
+
+
+# Plot probability density functions
+ax = axs[1]
+for n in range(N+1):
+    ax.plot(x, E_n[n] + psi_n[n]**2, linewidth=2)
+    ax.plot(x, E_n[n] + psi_n[n], color="gray", linewidth=0.5)
+    ax.hlines(E_n[n], -4, 4, linestyle='dashed', color="gray")
+
+ax.plot(x, 1/2*x**2, color="gray")
+ax.set_ylim([0, 5])
+ax.set_xlim([-4, 4])
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.set_xlabel(r"$\xi$")
+ax.set_ylabel(r"$V(\xi)$")
+for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] + ax.get_xticklabels() + ax.get_yticklabels()):
+  item.set_fontsize(20)
+
+plt.show()
+```
+
+
+## High energy solutions
+
+Classically $x \in \left[-\sqrt{\frac{2E}{m\omega^2}}, \,\,\sqrt{\frac{2E}{m\omega^2}}\right]\quad$ and $\quad|\psi_n|^2 \,\, \rightarrow\,\, \rho_\textrm{class.}(x) = \frac{1}{T}\,\frac{1}{v(x)}$
+
+
+``` {python}
+#| echo: false
+import matplotlib.pyplot as plt
+import numpy as np
+from math import factorial
+from numpy import pi, sin, linspace, sqrt, exp, cos, abs
+from scipy.special import hermite, erf
+
+# Parameters
+#
+# Width of the well
+a = 1.0
+# Largest eigenstate energy-level
+n = 60
+
+# Compute the eigenfunctions
+x = linspace(-12, 12, 1000)
+A_n = np.sqrt(1/(sqrt(pi)*2**n*factorial(n)))
+H_n = hermite(n, monic=False)
+psi_n = A_n * exp(-x**2/2) * H_n(x)
+E_n = (n + 0.5)
+xm = sqrt(2*E_n)
+xe = linspace(-0.9999*xm, 0.9999*xm, 1000)
+
+fig, ax = plt.subplots(1, 1, figsize=(15, 6))
+# Plot eigenfunctions
+ax.plot(x, abs(psi_n)**2)
+#ax.plot(xe, 1/sqrt(pi) * (1 - erf(sqrt(2*E_n) - abs(xe))))
+# There is a problem in this formula
+ax.plot(xe, 1/3.6 * 1/xm * 1 / sqrt(cos((pi/2)*(xe/xm))))
+#ax.plot(x, 1/2*x**2, color="gray")
+ax.set_ylim([0, 0.24])
+#ax.set_xlim([-40, 40])
+ax.hlines([0], 0, 1, color="gray")
+ax.vlines([-xm, xm], 0, 1, color="gray")
+#ax.spines['top'].set_visible(False)
+#ax.spines['right'].set_visible(False)
+#ax.spines['bottom'].set_visible(False)
+#ax.spines['left'].set_visible(False)
+ax.set_xlabel(r"$\xi$")
+#ax.set_ylabel(r"$V(\xi)$")
+for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] + ax.get_xticklabels() + ax.get_yticklabels()):
+  item.set_fontsize(20)
+#ax.set_xticks([0, 1], ["0", "L"])
+#print(xm)
+plt.show()
+```
+
+
+## Potential parameters & solutions 
+
+- Energy-levels $E_n \propto \omega$, $\qquad$ *Width parabola* scales with $1/\omega$
+
+$$
+E_n = \left(n + \frac{1}{2}\right) \hbar \omega \,\,\, \textrm{with} \,\, n = 0, 1, 2, \dots\\
+$$
+
+![](/figures/fig_harmonic_oscillator_omega_dependency.png)
+
+## Energy infinite well vs. harmonic oscillator
+
+:::: {.columns}
+
+::: {.column width=30%}
+
+**Infinite well:**
+
+- $E_n \propto n^2$
+- $E_n \propto 1/L^2$
+
+$$
+E_n = \frac{\hbar^2 \pi^2 n^2}{2mL^2}\\
+$$
+
+
+**Quantum H.O.:**
+
+- equidistant $E_n$
+- $E_n \propto \omega$
+- $\textrm{width} \propto 1/\omega$
+
+$$
+E_n = (n + 1/2) \hbar\omega
+$$
+
+
+:::
+
+::: {.column width=70%}
+
+
+![](/figures/fig_infinite_well_L_dependency.png)
+
+\
+
+![](/figures/fig_harmonic_oscillator_omega_dependency.png)
+
+:::
+
+::::
+
+# Alternative (Algebraic) derivation
+
+
+## Alternative (Algebraic) derivation
+
+The time-independent Schrodinger equation (TISE):
+
+$$
+-\frac{\hbar^2}{2m} \frac{\partial^2}{\partial x^2}\psi(x) + V(x) \psi(x) = E \psi
+$$
+
+with potential energy: $V(x) = \frac{1}{2}m\omega^2 x^2$
+
+$$
+-\frac{\hbar^2}{2m} \frac{\partial^2}{\partial x^2}\psi(x) + \frac{1}{2}m\omega^2 x^2 \psi(x) = E \psi
+$$
+
+::: fragment
+
+Operator form:
+
+$$
+\frac{1}{2m} \left(\hat{p}^2 + m^2\omega^2 x^2\right) \psi(x) = E \psi, \qquad \hat{p} = -i\hbar \frac{\partial}{\partial x}
+$$
+
+:::
+
+::: fragment
+
+This is a sum of squares $\longrightarrow$ factorize $u^2 + v^2 = (i u + v)(-iu + v)$
+
+:::
+
+## Ladder operators
+
+Ladder operators $\hat{a}_-\hat{a}_+ = (i u + v)(-i u + v) = u^2 + v^2$
+
+$$
+\hat{a}_\pm = \frac{1}{\sqrt{2 \hbar m \omega}}\left(\mp i \hat{p} + m\omega x \right), \qquad [\hat{x},\hat{p}] = x\hat{p} - \hat{p}x = i \hbar
+$$
+
+::: fragment
+
+The product is: 
+
+$$
+\begin{aligned}
+\hat{a}_-\hat{a}_+ &= \frac{1}{2\hbar m \omega} (i \hat{p} + m\omega x)(-i \hat{p} + m\omega x)\\
+&= \frac{1}{2\hbar m \omega} \left(\hat{p}^2 + (m\omega x)^2 - i m\omega (x\hat{p} - \hat{p}x)\right)\\
+&= \frac{1}{2\hbar m \omega} \left(\hat{p}^2 + (m\omega x)^2\right) - \frac{i}{2 \hbar} (x\hat{p} - \hat{p}x)\\
+&= \frac{1}{2\hbar m \omega} \left(\hat{p}^2 + (m\omega x)^2\right) + \frac{1}{2}\\
+&= \frac{1}{\hbar \omega} \hat{H} + \frac{1}{2}\\
+\end{aligned}
+$$
+
+:::
+
+## Ladder operators
+
+Ladder operators $\hat{a}_-\hat{a}_+ = (i u + v)(-i u + v) = u^2 + v^2$
+
+$$
+\hat{a}_\pm = \frac{1}{\sqrt{2 \hbar m \omega}}\left(\mp i \hat{p} + m\omega x \right), \qquad [\hat{x},\hat{p}] = x\hat{p} - \hat{p}x = i \hbar
+$$
+
+::: fragment
+
+We can also flip the ladder operators: 
+
+$$
+\begin{aligned}
+\hat{H} & = \left(\hat{a}_-\hat{a}_+ - \frac{1}{2}\right) \hbar \omega\\
+\hat{H} & = \left(\hat{a}_+\hat{a}_- + \frac{1}{2}\right) \hbar \omega\\
+\end{aligned}
+$$
+
+:::
+
+::: fragment
+
+Stationary Schrodinger equation becomes: 
+
+$$
+\begin{aligned}
+\hat{H}\psi = \hbar \omega \left(\hat{a}_+\hat{a}_- + \frac{1}{2}\right) \,\psi = E\,\psi \\
+\end{aligned}
+$$
+
+:::
+
+
+
+## Ladder operators generate solutions
+
+If $\psi(x)$ is a solution, the $\hat{a}_+\psi(x)$ is another solution:
+
+$$
+\hat{H} \psi(x) = E \psi \Rightarrow \hat{H} (\hat{a}_+ \psi(x)) = (E + \hbar \omega) (\hat{a}_+ \psi(x))
+$$
+
+
+::: fragment
+
+If $\psi(x)$ is a solution, then $\hat{a}_- \psi(x)$ is another solution:
+
+$$
+\hat{H} \psi(x) = E \psi \Rightarrow \hat{H} (\hat{a}_- \psi(x)) = (E - \hbar \omega) (\hat{a}_- \psi(x))
+$$
+
+:::
+
+## Ladder operators generate solutions
+
+Since energy $E > 0$ operating with $\hat{a}_-$ leads at some point to:
+
+$$
+\hat{a}_-\psi_0 = 0
+$$
+
+::: fragment
+
+The leads to the following differential equation
+$$
+\begin{aligned}
+\frac{1}{\sqrt{2\hbar m \omega}}\left(\hbar \frac{d}{d x} + m \omega x\right) \, \psi_0(x) &= 0\\
+\Rightarrow \frac{d \psi_0(x)}{d x} &= - \frac{m \omega}{\hbar} \, x \, \psi_0(x)\\
+\Rightarrow \int \frac{d \psi_0(x)}{\psi_0(x)} \, dx &= - \frac{m \omega}{\hbar} \, \int x \, dx\\
+\Rightarrow \ln(\psi_0(x)) &= - \frac{m \omega}{2\hbar} \, x^2 + C \\
+\Rightarrow \psi_0(x) &= A \, e^{- \frac{m \omega}{2\hbar} \, x^2} \\
+\end{aligned}
+$$
+
+
+:::
+
+
+## Ladder operators generate solutions
+
+$$
+\begin{aligned}
+\Rightarrow \psi_0(x) &= A \, e^{- \frac{m \omega}{2\hbar} \, x^2} \\
+\end{aligned}
+$$
+
+::: fragment
+
+Normalization requires $\int |\psi_0(x)|^2 = 1$
+
+$$
+\int_{-\infty}^{\infty} |\psi_0(x)|^2 \, dx = |A|^2 \, \int_{-\infty}^{\infty} e^{- \frac{m \omega}{\hbar} \, x^2} = |A|^2 \, \sqrt{\frac{\pi\hbar}{m\omega}}
+$$
+
+where we used the identity 
+
+$$
+\int_{-\infty}^{\infty} e^{- a x^2} dx = \sqrt{\frac{\pi}{a}}
+$$ 
+
+:::
+
+::: fragment
+
+This results in the solution:
+
+$$
+\psi_0(x) = \left(\frac{m \omega}{\pi \hbar}\right)^{1/4} e^{-\frac{m\omega}{2\hbar} x^2}
+$$
+
+:::
+
+## Solutions with the ladder operators
+
+Other solutions $\psi_n(x)$ can now be generated:
+
+$$
+\psi_n(x) = A_n \, (\hat{a}_+)^n \, \psi_0(x), \quad \textrm{with} \quad E_n = \left(n + \frac{1}{2}\right) \hbar \omega
+$$
+
+::: fragment
+
+The normalization factor $A_n$ can be calculated
+
+$$
+\psi_n(x) = \frac{1}{\sqrt{n!}} \, (\hat{a}_+)^n \, \psi_0(x), \quad \textrm{with} \quad E_n = \left(n + \frac{1}{2}\right) \hbar \omega
+$$
+
+:::
+
+::: fragment
+
+And operating with a single ladder operator:
+
+$$
+\hat{a}_+ \psi_n = \sqrt{n+1} \psi_{n+1}, \qquad \hat{a}_- \psi_n = \sqrt{n} \psi_{n-1}
+$$
+
+:::
+
+## Summary
+
+- Infinite well
+  - Eigenstates evolve different in time
+  - Single eigenstates are stationary for finite expectation energy $\langle \hat{H} \rangle$
+  - Superposition of eigenstates leads to non-constant $\langle \hat{x} \rangle$, i.e. a nonzero velocity
+
+- Harmonic oscillator
+  - Energy levels equally spaced $\quad E_n = \hbar \omega (n + 1/2)$
+  - Nonzero ground energy $\,\,E_0 = \frac{1}{2}\hbar\omega$
+  - Solutions proportional with Hermite polynomials $\,H_n(x)$
+  - Alternative algebraic method
+  - Ladder operators (Algebraic method)
+
+
+
+
+
+
+
+
+
+
+
+
+## Summary
+
+So far we looked at bound states
+
+- Infinite well
+- Linear potential well (Electrical field, not seen yet)
+- Harmonic oscillator
+
+Different well potentials lead to different allowed energy levels\
+
+Narrower wells $\longrightarrow$ less energy levels (more spread)
