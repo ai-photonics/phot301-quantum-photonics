@@ -1,0 +1,156 @@
+\documentclass{article}[a4paper]
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsbsy}
+\usepackage{bbm}
+\usepackage{tikz}
+\usepackage[landscape, top=0mm, bottom=0mm, left=0mm, marginparwidth=0mm,  marginparsep=0mm, centering, includefoot]{geometry}
+
+\begin{document}
+%
+%\scriptsize
+%
+\begin{minipage}[t]{0.5\textwidth}
+  \noindent
+  \begin{center}
+    \large{Fundamental Equations}
+  \end{center}
+  \noindent
+  \begin{align*}
+    &\textrm{Schrodinger Equation} & ~&i\hbar \frac{\partial \Psi}{\partial t} = \hat{H} \Psi \\
+    &&&\\
+    &\textrm{\parbox{0.3\textwidth}{Time-independent \\ Schrodinger Equation}} & ~&\hat{H} \psi = E \psi, \qquad \Psi(\vec{x},t) = \psi(\vec{x}) e^{-iEt/\hbar}\\
+    &&&\\
+    &\textrm{Hamiltonian operator} & ~&\hat{H} = \frac{\hat{p}^2}{2m} + V = - \frac{\hbar^2}{2m}\nabla^2 + V\\
+    &&&\\
+    &\textrm{Momentum operator} & ~&\hat{p} = -i\hbar \nabla,\qquad \textrm{1D:}\quad \hat{p} = -i\hbar \frac{\partial }{\partial x}\\
+    &&&\\
+    &\textrm{\parbox{0.3\textwidth}{Expectation value}} & ~&\langle\hat{Q}\rangle = \langle \psi |\hat{Q}|\psi\rangle\\
+    &&&\\
+    &\textrm{\parbox{0.3\textwidth}{Eigenstate expansion}} & ~&\frac{d\langle\hat{Q}\rangle}{dt} = \frac{i}{\hbar}\left\langle \left[ \hat{H}, \hat{Q} \right] \right\rangle + \left\langle \frac{\partial \hat{Q}}{\partial t} \right\rangle\\
+    &&&\\
+    &\textrm{\parbox{0.3\textwidth}{Eigenenergy expansion \\ energy expectation}} & ~&\frac{d\langle\hat{Q}\rangle}{dt} = \fr\\
+    &&&\\
+    &\textrm{\parbox{0.3\textwidth}{Time dependence \\ expectation value}} & ~&\frac{d\langle\hat{Q}\rangle}{dt} = \frac{i}{\hbar}\left\langle \left[ \hat{H}, \hat{Q} \right] \right\rangle + \left\langle \frac{\partial \hat{Q}}{\partial t} \right\rangle\\
+    &&&\\
+    &\textrm{\parbox{0.3\textwidth}{Generalized uncertainty \\ principle}} & ~&\sigma_A \sigma_B \geq \left| \frac{1}{2i} \left\langle \left[ \hat{A}, \hat{B} \right] \right\rangle \right|\\
+    &&&\\
+    &\textrm{\parbox{0.3\textwidth}{Heisenberg uncertainty \\ principle}} & ~&\sigma_x \sigma_p \geq \frac{\hbar}{2}\\
+    &&&\\
+    &\textrm{Canonical commutator} & ~&[\hat{x}, \hat{p}] = i\hbar\\
+    &&&\\
+    &\textrm{Angular momentum} & ~&[\hat{L}_x, \hat{L}_y] = i\hbar\hat{L}_z, \quad [\hat{L}_y, \hat{L}_z] = i\hbar\hat{L}_x, \quad [\hat{L}_z, \hat{L}_x] = i\hbar\hat{L}_y\\
+    &&&\\
+    &\textrm{Pauli matrices} & ~&\sigma_x = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}, \quad \sigma_y = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}, \quad \sigma_z = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}\\
+    &&&\\
+    &\textrm{Minimal coupling} & ~&i\hbar \frac{\partial \Psi}{\partial t} = \left[\frac{1}{2m}(\vec{\hat{p}} - q \vec{A})^2 + q V \right] \Psi\\
+    &&&\\
+    &\textrm{Pauli equation} & ~&i\hbar \frac{\partial }{\partial t} \chi = \left[ \frac{1}{2m_e} (\vec{\hat{p}} - e \vec{A})^2 \mathbbm{1} + e V \mathbbm{1} + \frac{g \mu_B}{2} \hat{\vec{\sigma}}\cdot\vec{B} \right] \chi\\
+    &&~&\textrm{with spinor}\quad\chi = \begin{pmatrix} \varphi_\uparrow \\ \varphi_\downarrow \end{pmatrix} \\
+  \end{align*}%
+\end{minipage}%
+%
+\begin{minipage}[t]{0.5\textwidth}
+  \noindent
+  \begin{center}
+    \large{Operators \& Dirac notation}
+  \end{center}
+  \noindent
+  \begin{align*}
+    &\textrm{\parbox{0.3\textwidth}{Bra, ket in $\mathbb{C}^n$}} & ~&\langle \alpha | = | \alpha \rangle^\dagger = (a_1^*, \dots , a_n^*),\qquad | \alpha \rangle = \begin{pmatrix}a_1\\ \vdots \\ a_n\end{pmatrix}\\
+    &\textrm{\parbox{0.3\textwidth}{Inner product in $\mathbb{C}^n$ and $L^2$}} & ~& \langle \alpha | \beta \rangle = \sum_j a^*_j b_j, \qquad \langle f | g \rangle = \int_a^b f^* g\,dx\\
+    &\textrm{\parbox{0.3\textwidth}{Schwartz inequality}} & ~& \left| \langle \alpha | \beta \rangle \right|^2 \leq \langle \alpha | \alpha\rangle \langle \beta | \beta \rangle\\
+    &\textrm{\parbox{0.3\textwidth}{Triangle inequality}} & ~&  \| |\alpha\rangle + |\beta\rangle \| \leq \| |\alpha\rangle \| + \| |\beta\rangle \| \\
+    &\textrm{\parbox{0.3\textwidth}{Eigenstate expansion}} & ~& | \psi \rangle  = \sum_n c_n | \psi_n \rangle\,\,\, \textrm{with}\,\,\,c_n = \langle \psi_n | \psi \rangle\\
+    &\textrm{\parbox{0.3\textwidth}{Projection operator}} & ~& \hat{P}_\alpha = | \alpha \rangle\langle \alpha |\\
+    &\textrm{\parbox{0.3\textwidth}{Commutator}} & ~&[\hat{A},\hat{B}] = \hat{A}\hat{B} - \hat{B}\hat{A}\\
+    &\textrm{\parbox{0.3\textwidth}{Anti-commutator}} & ~&\{\hat{A},\hat{B}\} = \hat{A}\hat{B} + \hat{B}\hat{A}\\
+  \end{align*}
+  \begin{center}
+    \large{Fundamental Constants}
+  \end{center}
+  \noindent
+  \begin{align*}
+    &\textrm{Mass of an electron}  & ~&m_e = 9.11 \times 10^{-31} ~\textrm{kg}\\
+    &\textrm{Mass of a proton}     & ~&m_p \approx 1836~m_e\\
+    &\textrm{Charge of an electron}& ~&-e\, = -1.602\times 10^{-19}~\textrm{C}\\
+    &\textrm{Electronvolt}         & ~&1\,\,\textrm{eV}\, = \,1.602\times 10^{-19} ~\textrm{J}\\
+    &\textrm{Atomic mass unit}     & ~&1\,\textrm{Dalton} = 1.66 \times 10^{-27}~\textrm{kg} \approx \frac{5}{3} \times 10^{-27}~\textrm{kg}\\
+    &\textrm{Bohr magneton}        & ~&\mu_B = 9.3 \times 10^{-24}~\textrm{J/T} = 5.8 \times 10^{-5}~\textrm{eV/T}\\
+    &\textrm{Joule in SI units}    & ~&\textrm{[J = kg m$^2$/s$^2$]}\\
+    &\textrm{Boltzmann constant}   & ~&k_B = 1.38 \times 10^{-23}~\textrm{J/K} = 8.62 \times 10^{-5}~\textrm{eV/K}\\
+    &\textrm{Planck's constant}    & ~&h = 6.63 \times 10^{-34}~\textrm{J s} = 4.14 \times 10^{-15}~\textrm{eV s}\\
+    &\textrm{Reduced Planck's constant} & ~&\hbar = \frac{h}{2\pi} = 1.055 \times 10^{-34}~\textrm{J s} = 6.582 \times 10^{-16}~\textrm{eV s}\\
+    &\textrm{Speed of light}       & ~&c = 3\times 10^8 \textrm{m/s}\\
+    &\textrm{Conversion\quad} E = hf = \frac{h c}{\lambda} & ~&hc = 1240~\textrm{eV nm}\\
+    &\textrm{Rest energy electron} & ~&m_e c^2 = 0.511~\textrm{MeV}\\
+  \end{align*}
+\end{minipage}%
+%
+\newpage
+%
+\begin{minipage}[t]{0.5\textwidth}
+  \noindent
+  \begin{center}
+    \large{Bound States Common Potentials}
+  \end{center}
+  \begin{align*}
+    &\textrm{\parbox{0.28\textwidth}{1D Infinite well\\~\\ $V(x) = 0$ if $0 < x < L$\\ $V(x) = \infty$ otherwise}}    & ~&\psi_n(x) = \sqrt{\frac{2}{L}} \sin\left( \frac{n\pi x}{L} \right),\\
+    && ~&E_n = \frac{\hbar^2 \pi^2 n^2}{2m L^2}, \qquad n = 1, 2, 3, \dots \\
+    &&&\\
+    &&&\\
+    &\textrm{\parbox{0.28\textwidth}{3D Infinite well\\~\\ $V = 0$ if $0 < x_i < L_i$,\\ $V = \infty$ otherwise}} & ~&\psi_{n_x,n_y,n_z} = \sqrt{\frac{8}{L_x L_y L_z}} \sin\left( \frac{n_x\pi x}{L_x} \right) \sin\left( \frac{n_y\pi y}{L_y} \right)\sin\left( \frac{n_z\pi z}{L_z} \right)\\
+    && ~&E_n = \frac{\hbar^2 \pi^2}{2m}\left( \frac{n_x^2}{L_x^2} + \frac{n_y^2}{L_y^2} + \frac{n_z^2}{L_z^2} \right), \qquad n_x(n_y, n_z) = 1, 2, 3, \dots\\
+    &&&\\
+    &\textrm{\parbox{0.28\textwidth}{1D $\delta$-function\\ potential well\\ $V(x) = -\alpha \delta(x)$}} & ~&\psi(x) = \sqrt{\kappa} e^{-\kappa |x|}, \qquad \kappa = \frac{m\alpha}{\hbar^2}, \qquad E = -\frac{m\alpha^2}{2\hbar^2}\\
+    &&&\\
+    &\textrm{\parbox{0.28\textwidth}{1D Linear potential\\~\\ $V(x) = e\tilde{E}x$ if $0 < x < L$ \\ $V(x) = \infty$ otherwise}}  & ~&\psi_n(x) = C \,\mathrm{Ai}(z) + D \,\mathrm{Bi}(z),\quad\frac{D}{C} = -\frac{\mathrm{Bi(z_0)}}{\mathrm{Ai(z_0)}}\\
+    && ~&\varepsilon = \frac{E}{E_1^{\infty}}, \quad \nu_L = \frac{e\tilde{E}L}{E_1^{\infty}}, \quad z = \left(\frac{\pi}{\nu_L}\right)^{\frac{2}{3}} \left(\frac{x}{L}\nu_L - \varepsilon\right)\\
+    &&&\\
+    && ~&E_n \longleftarrow \mathrm{Ai}(z_0) \, \mathrm{Bi}(z_L) - \mathrm{Ai}(z_L) \, \mathrm{Bi}(z_0) = 0\\
+    && ~&z_0 = - \left(\frac{\pi}{\nu_L}\right)^{2/3} \varepsilon, \qquad z_L = \left(\frac{\pi}{\nu_L}\right)^{2/3} \left(\nu_L - \varepsilon\right)
+    &&&\\
+    &&&\\
+    &\textrm{\parbox{0.28\textwidth}{1D Harmonic oscillator \\~\\ $V(x) = \frac{1}{2} m\omega^2 x^2$}} & ~&\psi_n(x) = \frac{1}{\sqrt{2^n \, n!}} \, \left(\frac{m\omega}{\pi \hbar}\right)^{1/4} \, H_n\left(\xi\right) \, e^{-\xi^2/2}, \quad \xi \equiv \sqrt{\frac{m\omega}{\hbar}} \,x\\
+    && ~&H_0(\xi) = 1, \quad H_1(\xi) = 2\xi, \quad H_2(\xi) = 4\xi^2-2,\quad\dots  \\
+    &&&\\
+    && ~&E_n = \left(n + \frac{1}{2}\right) \hbar\omega, \qquad n = 0, 1, 2, 3, \dots\\
+  \end{align*}
+\end{minipage}%
+%
+%
+\begin{minipage}[t]{0.5\textwidth}
+  \noindent
+  \begin{center}
+    \large{Scattering at Common Potentials}
+  \end{center}
+  \begin{align*}
+    &\textrm{\parbox{0.28\textwidth}{1D $\delta$-function \\ well/barrier\\ $V(x) = \pm \alpha \delta(x)$}}    & ~&R = \frac{1}{1 + \frac{2\hbar^2E}{m\alpha^2}},\quad T = \frac{1}{1 + \frac{m\alpha^2}{2\hbar^2E}}.\\
+  \end{align*}
+  \begin{center}
+    \large{Hydrogen Atom}
+  \end{center}
+  \noindent The eigenstates $\,\,\psi_{nlm}(\vec{r}) = R_{nl}(r) Y_{lm}(\theta, \phi)$
+  \noindent
+  \begin{align*}
+  R_{nl}(s) &= \left[ \frac{(n - l - 1)!}{2\,n\,(n+l)!} \left(\frac{2}{n\,a_0}\right)^3 \right]^{1/2} s^l \, L^{2l+1}_{n-l-1}(s) \, e^{-s/2}, \quad s = \frac{2\,r}{n\,a_0}\\
+  &\\
+  \quad Y_{lm}(\theta, \phi) &= (-1)^{m+|m|} \left[ \frac{2l + 1}{4\pi} \,\frac{(l - |m|)!}{(l + |m|)!} \right]^{1/2} P^{|m|}_l(\cos\theta) e^{im\phi} \quad\\
+  &\\
+  &\textrm{eigenenergies}\quad E_n = -\frac{\textrm{Ry}}{n^2} = -\frac{13.6 \, \textrm{eV}}{n^2}, \qquad n = 1, 2, 3, \dots \\
+  \end{align*}%
+  with associated Legendre and associated Laguerre polynomials:
+  \begin{align*}
+    &\textrm{\parbox{0.3\textwidth}{Associated Laguerre \\ polynomials}} & ~&L_k^{\alpha}(z) = \sum_{j = 0}^{k}(-1)^j \begin{pmatrix}k+\alpha\\ k - j\end{pmatrix} \frac{x^j}{j!}\\
+    &\textrm{\parbox{0.3\textwidth}{Associated Legendre \\ polynomials}} & ~&P^{m}_l(z) = \frac{(1-z^2)^m/2}{2^l l!} \frac{d^{m+l}}{dz^{m+l}}(z^2 - 1)^l\\
+  \end{align*}
+  \begin{align*}
+    &\textrm{\parbox{0.3\textwidth}{Rydberg energy unit}} & ~&\textrm{Ry} = 13.6~\textrm{eV}\\
+    &\textrm{\parbox{0.3\textwidth}{Rydberg constant \\ for hydrogen}} & ~&R_H = 1.0968 \times 10^7~\textrm{m}^{-1} \approx 1.1\times 10^7~\textrm{m}^{-1}\\
+    &\textrm{\parbox{0.3\textwidth}{Rydberg constant \\ for heavy atoms}} & ~&R_\infty = 1.0974 \times 10^7~\textrm{m}^{-1} \approx 1.1\times 10^7~\textrm{m}^{-1}\\
+    &&&\\
+  \end{align*}%
+\end{minipage}%
+%
+%
+\end{document}
