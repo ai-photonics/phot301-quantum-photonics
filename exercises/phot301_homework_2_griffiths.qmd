@@ -1,0 +1,143 @@
+---
+title: "PHOT 301: Quantum Photonics"
+subtitle: "Homework problems 2"
+author: "Michaël Barbier, Fall (2025-2026)"
+#date: today
+#date-format: long
+execute:
+  echo: true
+  output: true
+  warning: true
+  error: true
+  code-overflow: wrap
+  code:
+    font-size: 48px
+  code-line-numbers: true
+format: 
+  pdf:
+    include-in-header:
+      text:
+        \usepackage{amsfonts}
+        \usepackage{amsmath}
+        \DeclareMathOperator\erf{erf}
+    highlight-style: tango
+    documentclass: scrartcl
+    papersize: A4
+    fontsize: 12pt
+    margin-bottom: 2.5cm
+    margin-top: 2.5cm
+    margin-left: 2.5cm
+    margin-right: 2.5cm
+editor: source
+jupyter: python3
+---
+
+
+# Problems
+
+Here we list the problems with there final solutions so you can check whether you have the corrects answers. Some problems ask you to prove a theorem, for these problems, I write just some extra hints.
+The problems are from Griffiths 3rd edition. The problems for this week:
+
+- Chapter 2: 2.1(c), 2.3, 2.4, 2.5, 2.7
+
+## Problem 2.1(c)
+\color{Black}
+
+Prove theorem (c):
+If $V(x)$ is an even function (that is, $V(-x) = V(x)$) then $\psi(x)$ can always be taken to be either even or odd. Hint: If $\psi(x)$ satisfies Equation 2.5, for a given $E$, so too does $\psi(-x)$, and hence also the even and odd linear combinations $\psi(x) \pm \psi(-x)$.
+
+### Partial solution (2.1c)
+\color{Blue}
+
+Prove via considering $\psi_\pm(x) = \psi(x) \pm \psi(-x)$ and $\psi$ can always be written as a linear combination of them $\psi_\pm(x)$.
+
+## Problem 2.3
+\color{Black}
+
+Show that there is no acceptable solution to the (time-independent)
+Schrödinger equation for the infinite square well with $E = 0$ or $E < 0$. (This is a special case of the general theorem in Problem 2.2, but this time do it by explicitly solving the Schrödinger equation, and showing that you cannot satisfy the boundary conditions.)
+
+### Solution (2.3)
+\color{Blue}
+
+- For $E = 0$ the solution is $\psi(x) = Ax + B$, prove then that $A$ and $B$ are zero due to the boundary conditions $\psi(0) = \psi(a) = 0$.
+- For $E < 0$ the solution can be written as $\psi(x) = A \sinh(\kappa x) + B \cosh(\kappa x)$ (alternatively use $\psi(x) = A e^{\kappa x} + B e^{-\kappa x}$). Prove then that $A$ and $B$ are zero due to the boundary conditions $\psi(0) = \psi(a) = 0$.
+
+
+## Problem 2.4
+\color{Black}
+
+Calculate $\langle x \rangle$, $\langle x^2 \rangle$, $\langle p \rangle$, $\langle p^2 \rangle$, $\sigma_x$, and $\sigma_p$, for the nth stationary state of the infinite square well. Check that the uncertainty principle is satisfied. Which state comes closest to the uncertainty limit?
+
+### Solution (2.4)
+\color{Blue}
+
+$$
+\begin{aligned}
+\langle x \rangle = \frac{a}{2},\qquad &\langle x^2 \rangle = a^2\,\left(\frac{1}{3} - \frac{1}{2\pi^2n^2}\right),\\
+\langle p \rangle = 0,          \qquad &\langle p^2 \rangle = 2m E_n = \frac{\hbar^2 \pi^2 n^2}{a^2},\\ 
+\sigma_x = a\,\sqrt{\frac{1}{12} - \frac{1}{2\pi^2n^2}}, \qquad & \sigma_p = \frac{\hbar \pi n}{a}\\
+\sigma_x\sigma_p = \frac{\hbar}{2} \sqrt{\frac{\pi^2 n^2}{3} - 2} > \frac{\hbar}{2},\qquad & \textrm{and smallest when in ground state } n = 1\\
+\end{aligned}
+$$
+
+## Problem 2.5
+\color{Black}
+
+A particle in the infinite square well has as its initial wave function an even
+mixture of the first two stationary states:
+
+$$
+\Psi(x, 0) = A [\psi_1(x) + \psi_2(x)].
+$$
+
+(a) Normalize $\Psi(x, 0)$. (That is, find $A$. This is very easy, if you exploit the orthonormality of $\psi_1(x)$ and $\psi_2(x)$. Recall that, having normalized $\Psi$ at $t = 0$, you can rest assured that it stays normalized---if you doubt this, check it explicitly after doing part (b).)
+(b) Find $\Psi(x, t)$ and $|\Psi(x, t)|2$. Express the latter as a sinusoidal function of time, as in Example 2.1. To simplify the result, let $\omega \equiv \frac{\pi^2\hbar}{2ma^2}$.
+(c) Compute $\langle x \rangle$. Notice that it oscillates in time. What is the angular frequency of the oscillation? What is the amplitude of the oscillation? (If your amplitude is greater than $a/2$, go directly to jail.)
+(d) Compute $\langle p \rangle$. (As Peter Lorre would say, "Do it ze kveek vay, Johnny!")
+(e) If you measured the energy of this particle, what values might you get, and what is
+the probability of getting each of them? Find the expectation value of $\mathcal{H}$. How does it compare with $E_1$ and $E_2$?
+
+### Solution (2.5)
+\color{Blue}
+
+(a) $A = \frac{1}{\sqrt{2}}$.
+(b) $\Psi(x,t) = \frac{1}{\sqrt{a}}\,e^{-i\omega t}\,\left[ \sin\frac{\pi x}{a} + \sin\frac{\pi x}{a} \, e^{-i3\omega t} \right]$.\
+$|\Psi(x,t)|^2 = \frac{1}{a}\,\left[ \sin^2\left(\frac{\pi x}{a}\right) + \sin^2\left(\frac{2\pi x}{a}\right) + 2 \sin\left(\frac{\pi x}{a}\right) \sin\left(\frac{2\pi x}{a}\right) \,\cos(3\omega t) \right]$.
+(c) $\langle x \rangle = \frac{a}{2} \left[ 1 - \frac{32}{9\pi^2}\,\cos(3\omega t) \right]$, where the Amplitude is $\frac{a}{2} \,\frac{32}{9\pi^2} < \frac{a}{2}$ and the angular frequency $3\omega = 3E_1/\hbar = \frac{3\hbar \pi^2 }{2 m a^2}$
+(d) $\langle p \rangle = \frac{8\hbar}{3a} \sin(3\omega t)$.
+(e) $\langle \hat{H} \rangle = \frac{5}{2}\,E_1 = \frac{5}{2}\,\frac{\hbar^2 \pi^2}{2 m a^2}$
+
+
+## Problem 2.7
+\color{Black}
+
+A particle in the infinite square well has the initial wave function
+
+$$
+\Psi(x, 0) = 
+\left\{
+\begin{aligned}
+  \quad Ax, \qquad&0 \leq x \leq a/2,\\
+  \quad A (a − x), \qquad&a/2 \leq x \leq a.
+  \end{aligned}
+\right.
+$$
+
+(a) Sketch $\Psi(x, 0)$, and determine the constant $A$.
+(b) Find $\Psi(x, t)$.
+(c) What is the probability that a measurement of the energy would yield the value $E_1$ ?
+(d) Find the expectation value of the energy, using Equation 2.21.
+
+### Solution (2.7)
+\color{Blue}
+
+(a) The sketch is a isosceles triangle with base from $x = 0$ to $x = a$ and top $Aa/2$. Normalization constant $A = \frac{2\sqrt{3}}{\sqrt{a^3}}$
+(b) $\Psi(x, t) = \sum_n c_n \psi_n(x) \, e^{-i n^2 E_1 t/\hbar}$ with $c_n = \frac{4\sqrt{6}}{n^2\pi^2}\, \sin\left(\frac{n\pi}{2}\right)$. Notice that $c_n \neq 0$ only when $n = 1, 3, 5, \dots$. Therefore:
+
+$$
+\Psi(x, t) = \sqrt{\frac{2}{a}} \frac{4\sqrt{6}}{\pi^2} \sum_{n=1,3,5,\dots} \frac{1}{n^2}\, (-1)^{(n-1)/2} \sin\left(\frac{n\pi x}{a}\right) \, e^{-i n^2 E_1 t/\hbar}
+$$
+
+(c) $P(E_1) = |c_1|^2 = \frac{16\cdot 6}{\pi^4}$
+(d) $\langle \hat{H} \rangle = \frac{6\hbar^2}{ma^2}$.

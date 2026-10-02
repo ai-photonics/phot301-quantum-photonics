@@ -1,0 +1,364 @@
+---
+title: "PHOT 301: Quantum Photonics"
+subtitle: "Homework problems 3 & 4"
+author: "Michaël Barbier, Fall (2025-2026)"
+#date: today
+#date-format: long
+execute:
+  echo: true
+  output: true
+  warning: true
+  error: true
+  code-overflow: wrap
+  code:
+    font-size: 48px
+  code-line-numbers: true
+format: 
+  pdf:
+    include-in-header:
+      text:
+        \usepackage{amsfonts}
+        \usepackage{amsmath}
+        \DeclareMathOperator\erf{erf}
+    highlight-style: tango
+    documentclass: scrartcl
+    papersize: A4
+    fontsize: 12pt
+    margin-bottom: 2.5cm
+    margin-top: 2.5cm
+    margin-left: 2.5cm
+    margin-right: 2.5cm
+editor: source
+jupyter: python3
+---
+
+
+# Problems
+
+Here we list the problems with there final solutions so you can check whether you have the corrects answers. Some problems ask you to prove a theorem, for these problems, I write just some extra hints.
+The problems are from Griffiths 3rd edition. The problems for this week:
+
+- Chapter 2: 2.11, 2.13, 2.14, 2.17, 2.18, 2.25, 2.31, 2.34, 2.41, 2.53
+
+## Problem 2.11
+\color{Black}
+
+(a) Compute $\langle x \rangle$, $\langle \hat{p} \rangle$, $\langle x^2 \rangle$, and $\langle \hat{p}^2 \rangle$, for the states $\psi_0$ (Equation 2.60) and $\psi_1$ (Equation
+2.63), by explicit integration. Comment: In this and other problems involving the
+harmonic oscillator it simplifies matters if you introduce the variable $\xi \equiv \sqrt{\frac{m\omega}{\hbar}} x$ and the constant $\alpha \equiv \left(\frac{m \omega}{\pi\hbar}\right)^{1/4}$.
+(b) Check the uncertainty principle for these states.
+(c) Compute $\langle \hat{T} \rangle$ and $\langle V \rangle$ for these states. (No new integration allowed!) Is their sum what you would expect?
+
+### Solution (2.11)
+\color{Blue}
+
+(a) $\langle x \rangle = 0$ and $\langle \hat{p} \rangle = 0$ for both $\psi_0$ and $\psi_1$. 
+
+$$
+\begin{aligned}
+n = 0: \qquad \langle x^2 \rangle = \frac{\hbar}{2m\omega} &\qquad \langle \hat{p}^2 \rangle = \frac{m\hbar\omega}{2}\\ 
+n = 1: \qquad \langle x^2 \rangle = \frac{3\hbar}{2m\omega} &\qquad \langle \hat{p}^2 \rangle = \frac{3m\hbar\omega}{2}\\ 
+\end{aligned}
+$$
+
+(b) The eigenstates fulfill the uncertainty relation $\sigma_x \sigma_p \geq \frac{\hbar}{2}$:
+
+$$
+\begin{aligned}
+n = 0: \qquad \sigma_x \sigma_p = \frac{\hbar}{2} = \frac{\hbar}{2}\\ 
+n = 1: \qquad \sigma_x \sigma_p = \frac{3\hbar}{2} \geq \frac{\hbar}{2}\\ 
+\end{aligned}
+$$
+
+(c) The results for the kinetic and potential energy are:
+
+$$
+\begin{aligned}
+n = 0: \qquad \langle \hat{T} \rangle = \frac{1}{4}\hbar\omega &\qquad \langle V \rangle = \frac{1}{4}\hbar\omega &\qquad \langle \hat{T} \rangle + \langle V \rangle = \frac{1}{2}\hbar\omega = E_0\\ 
+n = 1: \qquad \langle \hat{T} \rangle = \frac{3}{4}\hbar\omega &\qquad \langle V \rangle = \frac{3}{4}\hbar\omega &\qquad \langle \hat{T} \rangle + \langle V \rangle = \frac{3}{2}\hbar\omega = E_1\\ 
+\end{aligned}
+$$
+
+
+## Problem 2.13
+\color{Black}
+
+A Particle in the harmonic oscillator potential starts out in the state
+$\Psi(x, 0) = A [3 \psi_0(x) + 4 \psi_1(x)]$.
+
+(a) Find $A$.
+(b) Construct $\Psi(x, t)$ and $|\Psi(x, t)|^2$ . Don’t get too excited if $|\Psi(x, t)|^2$ oscillates at exactly the classical frequency; what would it have been had I specified $\psi_2(x)$,
+instead of $\psi_1(x)$?
+(c) Find $\langle x \rangle$ and $\langle \hat{p} \rangle$. Check that Ehrenfest’s theorem (Equation 1.38) holds, for this wave function.
+(d) If you measured the energy of this particle, what values might you get, and with what probabilities?
+
+### Solution (2.13)
+\color{Blue}
+
+(a) $A = 1/5$.\
+(b) $\Psi(x, t) = \frac{1}{5} [3\psi_0 e^{-i\omega t} + 4\psi_1 e^{-3i\omega t/2}]$ and $|\Psi(x, t)|^2 = \frac{1}{25} [9\psi_0^2 + 16\psi_1^2 + 24 \psi_0 \psi_1 \cos (\omega t)]$.\
+In case one picks $\psi_2$ instead of $\psi_1$ then the frequency would double $\omega \longrightarrow 2\omega$.\
+(c) $\langle x \rangle = \frac{24}{25}\sqrt{\frac{\hbar}{2m\omega}} \cos(\omega t)$ and $\langle \hat{p} \rangle = -\frac{24}{25}\sqrt{\frac{m\omega\hbar}{2}} \sin(\omega t)$.\
+(d) Possible values for the energy are: 
+
+$$
+\begin{aligned}
+E_0 &= \frac{1}{2} \hbar \omega, \qquad\textrm{with probability}\quad |c_0|^2 = 9/25, \\
+E_1 &= \frac{3}{2} \hbar \omega, \qquad\textrm{with probability}\quad |c_1|^2 = 16/25, 
+\end{aligned}
+$$
+
+
+## Problem 2.14
+\color{Black}
+
+In the ground state of the harmonic oscillator, what is the probability (correct
+to three significant digits) of finding the particle outside the classically allowed region?
+Hint: Classically, the energy of an oscillator is $E = \frac{1}{2} k a^2 = \frac{1}{2} m \omega^2 a^2$ , where $a$ is the amplitude. So the "classically allowed region" for an oscillator of energy $E$ extends from $−\sqrt{2E/m\omega^2}$ to $\sqrt{2E/m\omega^2}$. Look in a math table under "Normal Distribution" or "Error Function" for the numerical value of the integral, or evaluate it by computer.
+
+### Solution (2.14)
+\color{Blue}
+
+$P_\textrm{outside} = 0.157$
+
+
+
+## Problem 2.17
+\color{Black}
+
+Show that $[Ae^{ikx} + Be^{−ikx}]$ and $[C \cos kx + D \sin kx]$ are equivalent ways
+of writing the same function of $x$, and determine the constants $C$ and $D$ in terms of $A$
+and $B$, and vice versa. Comment: In quantum mechanics, when $V = 0$, the exponentials
+represent traveling waves, and are most convenient in discussing the free particle, whereas
+sines and cosines correspond to standing waves, which arise naturally in the case of the
+infinite square well.
+
+### Solution (2.17)
+\color{Blue}
+
+$C = A + B; D = i(A − B)$ and $A = \frac{1}{2} (C − iD); B = \frac{1}{2} (C + iD)$
+
+
+## Problem 2.18
+\color{Black}
+
+Find the probability current, $J$ (Problem 1.14) for the free particle wave
+function Equation 2.95. Which direction does the probability flow?
+
+### Solution (2.18)
+\color{Blue}
+
+$J = \frac{\hbar k}{m}|A|^2$ which is in the positive x-direction.
+
+
+
+## Problem 2.25
+\color{Black}
+
+Check that the bound state of the delta-function well (Equation 2.132) is
+orthogonal to the scattering states (Equations 2.134 and 2.135)
+
+### Solution (2.25)
+\color{Blue}
+
+For wave functions $f(x)$ and $g(x)$ to be orthogonal the integral $\int_{-\infty}^{+\infty} f^*(x) g(x) \, dx$ becomes $0$. We can write the integral as follows:
+
+$$
+\frac{\sqrt{m\alpha}}{\hbar} \left[ \int_{-\infty}^0 e^{m \alpha x} (A e^{ikx} + Be^{−ikx}) \, dx + \int_0^{+\infty} e^{-m \alpha x} (F e^{ikx} + G e^{−ikx}) \, dx \right]
+$$
+
+Then by performing the integral and applying boundary conditions for the relations between $A$, $B$, $F$, and $G$, the integral can shown to be zero.
+
+## Problem 2.31
+\color{Black}
+
+The Dirac delta function can be thought of as the limiting case of a rectangle
+of area 1, as the height goes to infinity and the width goes to zero. Show that the delta-
+function well (Equation 2.117) is a "weak" potential (even though it is infinitely deep), in
+the sense that $z_0 \longrightarrow 0$. Determine the bound state energy for the delta-function potential, by treating it as the limit of a finite square well. Check that your answer is consistent
+with Equation 2.132. Also show that Equation 2.172 reduces to Equation 2.144 in the
+appropriate limit.
+
+### Solution (2.31)
+\color{Blue}
+
+Start with the formula for $z_0 = \frac{a}{\hbar} \sqrt{2mV_0}$ for the finite well, then take the limit for the width of the well $2a$ going to zero while the area $2aV_0$ is constant. Show that this limit is zero.
+
+Afterwards, notice that any "crossing" in the graphical representation of the trancendental equation is at small $z$ because $z_0$ is small. For small $z$ you can simplify the trancendental equation resulting in energy $E = - \frac{m \alpha^2}{2\hbar^2}$ similar to the delta-function potential well.
+
+## Problem 2.34
+\color{Black}
+
+Consider the "step" potential:
+
+$$
+V (x) =
+\left\{
+\begin{aligned}
+0, x ≤ 0,
+V_0, x > 0.
+\end{aligned}
+\right.
+$$
+
+(a) Calculate the reflection coefficient, for the case $E < V0$, and comment on the
+answer.\
+(b) Calculate the reflection coefficient for the case $E > V0$.\
+(c) For a potential (such as this one) that does not go back to zero to the right of the
+barrier, the transmission coefficient is not simply $|F|^2/|A|^2$ (with $A$ the incident
+amplitude and $F$ the transmitted amplitude), because the transmitted wave travels
+at a different speed. Show that:
+
+$$
+T = \sqrt{\frac{E − V_0}{E}}\frac{|F|^2}{|A|^2},
+$$
+
+for $E > V_0$. Hint: You can figure it out using Equation 2.99, or---more elegantly,
+but less informatively---from the probability current (Problem 2.18). What is $T$, for
+$E < V_0$?\
+(d) For $E > V_0$, calculate the transmission coefficient for the step potential, and check
+that $T + R = 1$.
+
+### Solution (2.34)
+\color{Blue}
+
+Assume that the wave function before the step $\psi(x \leq 0) = A e^{ikx} + Be^{−ikx}$ and 
+after the step $\psi(x \geq 0) = F e^{ikx}$.
+
+(a) For energy $E < V_0$: $\quad R = |B|^2/|A|^2 = 1$\
+(b) For energy $E > V_0$: $\quad R = \frac{(\sqrt{E} - \sqrt{E - V_0})^4}{V_0^2}$\
+(c) Consider that the phase velocity of the incident wave $v_i$ is different from the one of the transmitted wave $v_t$, after the step (see Eq. 2.98), and the probability to transmit is therefore also proportional to the ratio $v_t/v_i$.\
+Alternatively use the probability current, see problem 2.18.\
+(d) Use the expression of (c) and apply continuity of $\psi(x)$ and its derivative $\psi'(x)$ to extract:
+
+$$
+T = \frac{4 \sqrt{E} \sqrt{E - V_0} (\sqrt{E} - \sqrt{E - V_0})^2}{V_0^2}
+$$
+
+Then use the above $T$, and $R$ from (b) to show that $T + R = 1$.
+
+
+## Problem 2.41
+\color{Black}
+
+Find the allowed energies of the half harmonic oscillator
+
+$$
+V(x) = \left\{
+\begin{aligned}
+\frac{1}{2} m \omega^2 x^2, \qquad &x > 0,\\
+\infty,\qquad &x < 0.
+\end{aligned}
+\right.
+$$
+
+(This represents, for example, a spring that can be stretched, but not compressed.)
+Hint: This requires some careful thought, but very little actual calculation.
+
+### Solution (2.41)
+\color{Blue}
+
+The allowed energies are corresponding to odd solutions:
+
+$$
+E_n = (n + 1/2) \hbar \omega, \qquad n = 1, 3, 5, \dots
+$$
+
+## Problem 2.53
+\color{Black}
+
+The Scattering Matrix. The theory of scattering generalizes in a pretty
+obvious way to arbitrary localized potentials (Figure 2.21). To the left (Region I),
+$V(x) = 0$, so:
+
+$$
+\psi(x) = A e^{ikx} + B e^{−ikx}
+$$
+
+To the right (Region III), V (x) is again zero, so 
+
+$$
+\psi(x) = F e^{ikx} + G e^{−ikx}
+$$
+
+In between (Region II), of course, I can’t tell you what $\psi$ is until you specify the
+potential, but because the Schrödinger equation is a linear, second-order differential
+equation, the general solution has got to be of the form
+
+$$
+\psi(x) = C f(x) + D g(x),
+$$
+
+where $f(x)$ and $g(x)$ are two linearly independent particular solutions. There will
+be four boundary conditions (two joining Regions I and II, and two joining Regions
+II and III). Two of these can be used to eliminate $C$ and $D$, and the other two can be
+"solved" for $B$ and $F$ in terms of $A$ and $G$:
+
+$$
+B = S_{11} A + S_{12} G,\quad F = S_{21} A + S_{22} G.
+$$
+
+The four coefficients $S_{ij}$, which depend on $k$ (and hence on $E$), constitute a $2\times 2$
+matrix $S$, called the scattering matrix (or $S$-matrix, for short). The $S$-matrix tells you
+the outgoing amplitudes ($B$ and $F$) in terms of the incoming amplitudes ($A$ and $G$):
+
+$$
+\begin{pmatrix}
+B\\ F
+\end{pmatrix}
+=
+\begin{pmatrix}
+S_{11} & S_{12} \\ 
+S_{21} & S_{22} \\ 
+\end{pmatrix}
+\begin{pmatrix}
+A\\ G
+\end{pmatrix}
+$$
+
+In the typical case of scattering from the left, $G = 0$, so the reflection and transmission
+coefficients are
+
+$$
+R_l = \frac{|B|^2}{|A|^2}\Bigl|_{G=0} = |S_{11}|^2,\qquad T_l = \frac{|F|^2}{|A|^2}\Bigl|_{G=0} = |S_{21}|^2,
+$$
+
+For scattering from the right, $A = 0$, and
+
+$$
+R_r = \frac{|F|^2}{|G|^2}\Bigl|_{A=0} = |S_{22}|^2,\qquad T_r = \frac{|B|^2}{|G|^2}\Bigl|_{A=0} = |S_{12}|^2,
+$$
+
+
+(a) Construct the S-matrix for scattering from a delta-function well (Equation 2.117).
+(b) Construct the S-matrix for the finite square well (Equation 2.148). Hint: This
+requires no new work, if you carefully exploit the symmetry of the problem
+
+### Solution (2.53)
+\color{Blue}
+
+(a) S-matrix for scattering from a delta-function well:
+
+$$
+S
+=
+\frac{1}{1 - i\beta}
+\begin{pmatrix}
+i\beta & 1 \\ 
+1 & i\beta \\ 
+\end{pmatrix}.
+$$
+
+(b) S-matrix for the finite square well:
+
+$$
+S
+=
+\frac{e^{-2ika}}{\cos(2 l a) - i \frac{k^2 + l^2}{2kl} \sin(2 l a)} \,
+\begin{pmatrix}
+i\frac{l^2 - k^2}{2kl} \sin(2 l a) & 1 \\ 
+1 & i\frac{l^2 - k^2}{2kl} \sin(2 l a) \\ 
+\end{pmatrix}.
+$$
+
+

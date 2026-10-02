@@ -1,0 +1,124 @@
+---
+title: "PHOT 301: Quantum Photonics"
+subtitle: "Homework problems 3"
+author: "Michaël Barbier, Fall (2025-2026)"
+#date: today
+#date-format: long
+execute:
+  echo: true
+  output: true
+  warning: true
+  error: true
+  code-overflow: wrap
+  code:
+    font-size: 48px
+  code-line-numbers: true
+format: 
+  pdf:
+    include-in-header:
+      text:
+        \usepackage{amsfonts}
+        \usepackage{amsmath}
+        \DeclareMathOperator\erf{erf}
+    highlight-style: tango
+    documentclass: scrartcl
+    papersize: A4
+    fontsize: 12pt
+    margin-bottom: 2.5cm
+    margin-top: 2.5cm
+    margin-left: 2.5cm
+    margin-right: 2.5cm
+editor: source
+jupyter: python3
+---
+
+
+# Problems
+
+Here we list the problems with there final solutions so you can check whether you have the corrects answers. Some problems ask you to prove a theorem, for these problems, I write just some extra hints.
+The problems are from Griffiths 3rd edition. The problems for this week:
+
+- Chapter 2: 2.11, 2.13, 2.14
+
+
+## Problem 2.11
+\color{Black}
+
+(a) Compute $\langle x \rangle$, $\langle \hat{p} \rangle$, $\langle x^2 \rangle$, and $\langle \hat{p}^2 \rangle$, for the states $\psi_0$ (Equation 2.60) and $\psi_1$ (Equation
+2.63), by explicit integration. Comment: In this and other problems involving the
+harmonic oscillator it simplifies matters if you introduce the variable $\xi \equiv \sqrt{\frac{m\omega}{\hbar}} x$ and the constant $\alpha \equiv \left(\frac{m \omega}{\pi\hbar}\right)^{1/4}$.
+(b) Check the uncertainty principle for these states.
+(c) Compute $\langle \hat{T} \rangle$ and $\langle V \rangle$ for these states. (No new integration allowed!) Is their sum what you would expect?
+
+### Solution (2.11)
+\color{Blue}
+
+(a) $\langle x \rangle = 0$ and $\langle \hat{p} \rangle = 0$ for both $\psi_0$ and $\psi_1$. 
+
+$$
+\begin{aligned}
+n = 0: \qquad \langle x^2 \rangle = \frac{\hbar}{2m\omega} &\qquad \langle \hat{p}^2 \rangle = \frac{m\hbar\omega}{2}\\ 
+n = 1: \qquad \langle x^2 \rangle = \frac{3\hbar}{2m\omega} &\qquad \langle \hat{p}^2 \rangle = \frac{3m\hbar\omega}{2}\\ 
+\end{aligned}
+$$
+
+(b) The eigenstates fulfill the uncertainty relation $\sigma_x \sigma_p \geq \frac{\hbar}{2}$:
+
+$$
+\begin{aligned}
+n = 0: \qquad \sigma_x \sigma_p = \frac{\hbar}{2} = \frac{\hbar}{2}\\ 
+n = 1: \qquad \sigma_x \sigma_p = \frac{3\hbar}{2} \geq \frac{\hbar}{2}\\ 
+\end{aligned}
+$$
+
+(c) The results for the kinetic and potential energy are:
+
+$$
+\begin{aligned}
+n = 0: \qquad \langle \hat{T} \rangle = \frac{1}{4}\hbar\omega &\qquad \langle V \rangle = \frac{1}{4}\hbar\omega &\qquad \langle \hat{T} \rangle + \langle V \rangle = \frac{1}{2}\hbar\omega = E_0\\ 
+n = 1: \qquad \langle \hat{T} \rangle = \frac{3}{4}\hbar\omega &\qquad \langle V \rangle = \frac{3}{4}\hbar\omega &\qquad \langle \hat{T} \rangle + \langle V \rangle = \frac{3}{2}\hbar\omega = E_1\\ 
+\end{aligned}
+$$
+
+
+## Problem 2.13
+\color{Black}
+
+A Particle in the harmonic oscillator potential starts out in the state
+$\Psi(x, 0) = A [3 \psi_0(x) + 4 \psi_1(x)]$.
+
+(a) Find $A$.
+(b) Construct $\Psi(x, t)$ and $|\Psi(x, t)|^2$ . Don’t get too excited if $|\Psi(x, t)|^2$ oscillates at exactly the classical frequency; what would it have been had I specified $\psi_2(x)$,
+instead of $\psi_1(x)$?
+(c) Find $\langle x \rangle$ and $\langle \hat{p} \rangle$. Check that Ehrenfest’s theorem (Equation 1.38) holds, for this wave function.
+(d) If you measured the energy of this particle, what values might you get, and with what probabilities?
+
+### Solution (2.13)
+\color{Blue}
+
+(a) $A = 1/5$.\
+(b) $\Psi(x, t) = \frac{1}{5} [3\psi_0 e^{-i\omega t} + 4\psi_1 e^{-3i\omega t/2}]$ and $|\Psi(x, t)|^2 = \frac{1}{25} [9\psi_0^2 + 16\psi_1^2 + 24 \psi_0 \psi_1 \cos (\omega t)]$.\
+In case one picks $\psi_2$ instead of $\psi_1$ then the frequency would double $\omega \longrightarrow 2\omega$.\
+(c) $\langle x \rangle = \frac{24}{25}\sqrt{\frac{\hbar}{2m\omega}} \cos(\omega t)$ and $\langle \hat{p} \rangle = -\frac{24}{25}\sqrt{\frac{m\omega\hbar}{2}} \sin(\omega t)$.\
+(d) Possible values for the energy are: 
+
+$$
+\begin{aligned}
+E_0 &= \frac{1}{2} \hbar \omega, \qquad\textrm{with probability}\quad |c_0|^2 = 9/25, \\
+E_1 &= \frac{3}{2} \hbar \omega, \qquad\textrm{with probability}\quad |c_1|^2 = 16/25, 
+\end{aligned}
+$$
+
+
+## Problem 2.14
+\color{Black}
+
+In the ground state of the harmonic oscillator, what is the probability (correct
+to three significant digits) of finding the particle outside the classically allowed region?
+Hint: Classically, the energy of an oscillator is $E = \frac{1}{2} k a^2 = \frac{1}{2} m \omega^2 a^2$ , where $a$ is the amplitude. So the "classically allowed region" for an oscillator of energy $E$ extends from $−\sqrt{2E/m\omega^2}$ to $\sqrt{2E/m\omega^2}$. Look in a math table under "Normal Distribution" or "Error Function" for the numerical value of the integral, or evaluate it by computer.
+
+### Solution (2.14)
+\color{Blue}
+
+$P_\textrm{outside} = 0.157$
+

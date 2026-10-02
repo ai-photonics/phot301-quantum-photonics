@@ -1,0 +1,483 @@
+---
+title: "PHOT 301: Quantum Photonics"
+subtitle: "Homework problems 6"
+author: "Michaël Barbier, Fall (2025-2026)"
+#date: today
+#date-format: long
+execute:
+  echo: true
+  output: true
+  warning: true
+  error: true
+  code-overflow: wrap
+  code:
+    font-size: 48px
+  code-line-numbers: true
+format: 
+  pdf:
+    include-in-header:
+      text:
+        \usepackage{amsfonts}
+        \usepackage{amsmath}
+        \DeclareMathOperator\erf{erf}
+    highlight-style: tango
+    documentclass: scrartcl
+    papersize: A4
+    fontsize: 12pt
+    margin-bottom: 2.5cm
+    margin-top: 2.5cm
+    margin-left: 2.5cm
+    margin-right: 2.5cm
+editor: source
+jupyter: python3
+---
+
+
+# Problems
+
+Here we list the problems with there final solutions so you can check whether you have the corrects answers. Some problems ask you to prove a theorem, for these problems, I write just some extra hints.
+The problems are from Griffiths 3rd edition. The problems for quiz 4:
+
+- Textbook Chapter 3: 3.15, 3.18, 3.19, 3.23
+- Textbook Chapter 4: 4.1, 4.2 (you can check with the slides), 4.15, 4.16, 4.17, 4.19, 4.21, 4.25, 4.26, 4.52, 4.53, 4.54, 4.57
+
+## Problem 3.15
+\color{Black}
+
+Prove the famous "(your name) uncertainty principle", relating the uncertainty in position (A = x) to the uncertainty in energy ($B = p^2/2m + V$):
+
+$$
+\sigma_x \sigma_H \geq \frac{\hbar}{2m} |\langle p \rangle|.
+$$
+
+For stationary states this doesn’t tell you much---why not?
+
+### Solution (3.15)
+\color{Blue}
+
+Use $[x, \hat{p}^2]$ (see Eq. 2.52) and $[x, V] = 0$ to extract the commutator [\hat{A}, \hat{]}].
+
+## Problem 3.18
+\color{Black}
+
+Apply Equation 3.73 to the following special cases: (a) $Q = 1$; (b) $Q = H$; (c) $Q = x$; (d) $Q = p$. In each case, comment on the result, with particular reference to Equations 1.27, 1.33, 1.38, and conservation of energy (see remarks following Equation 2.21).
+
+### Solution (3.18)
+\color{Blue}
+
+
+
+## Problem 3.19
+\color{Black}
+
+Use Equation 3.73 (or Problem 3.18 (c) and (d)) to show that:\
+
+(a) For any (normalized) wave packet representing a free particle ($V (x)=0$), $\langle x \rangle$ moves at constant velocity (this is the quantum analog to Newton’s first law). Note: You showed this for a gaussian wave packet in Problem 2.42, but it is completely general.
+(b) For any (normalized) wave packet representing a particle in the harmonic oscillator potential $V(x)= \frac{1}{2} m \omega^2 x^2$, $\langle x \rangle$ oscillates at the classical frequency. Note:
+You showed this for a particular gaussian wave packet in Problem 2.49, but it is completely general.
+
+### Solution (3.19)
+\color{Blue}
+
+(a) From Eq. 1.38 (Ehrenfest’s theorem), one can show that $\langle \hat{p} \rangle$ should be a constant. Apply then the generalized Ehrenfest’s theorem in Eq. 3.73, with the position operator $\hat{Q} = \hat{x}$.\
+
+(b) In a similar manner as in (a) you can show that the expectation value for the position operator in an harmonic oscillator equals:
+
+$$
+\frac{d \langle x \rangle}{dx^2} = - \omega^2 \langle x \rangle
+$$
+
+with known oscillating solutions: $\langle x \rangle = A \sin(\omega t) + B \cos(\omega t)$
+
+
+
+## Problem 4.1
+\color{Black}
+
+(a) Work out all of the **canonical commutation relations** for components of the operators $\hat{r}$ and $\hat{p}$: $[x, y]$, $[x, \hat{p}_y]$, $[x, \hat{p}_x]$, $[\hat{p}_y, \hat{p}_z]$, and so on. *Answer:*
+
+$$
+[r_i, \hat{p}_j] = − [\hat{p}_i, r_j] = i\hbar \delta_{ij}, \quad [r_i ,r_j] = [\hat{p}_i, \hat{p}_j] = 0,
+$$
+
+where the indices stand for $x$, $y$, or $z$, and $r_x = x$, $r_y = y$, and $r_z = z$.\
+
+(b) Confirm the three-dimensional version of **Ehrenfest’s theorem**,
+
+$$
+\frac{d \langle \vec{r} \rangle}{dt} = \langle \hat{\vec{p}} \rangle, and \quad m \frac{d \langle \hat{\vec{p}} \rangle}{dt} = \langle -\nabla V \rangle.
+$$
+
+(Each of these, of course, stands for three equations—one for each component.)\
+Hint: First check that the "generalized" Ehrenfest theorem, Equation 3.73, is valid
+in three dimensions.\
+(c) Formulate **Heisenberg’s uncertainty principle** in three dimensions. *Answer:*
+
+$$
+\sigma_x \sigma_{p_x} \geq \hbar/2, \qquad \sigma_y \sigma_{p_y} \geq \hbar/2, \qquad \sigma_z \sigma_{p_z} \geq \hbar/2,
+$$
+
+but there is no restriction on, say, $\sigma_x \sigma_{p_y}$.
+
+### Solution (4.1)
+\color{Blue}
+
+(a) Use a test function $f \equiv f(x,y,z)$ to verify the commutator relations.
+(c) Look at equation 3.62.
+
+## Problem 4.2
+\color{Black}
+
+Use separation of variables in cartesian coordinates to solve the infinite cubical well (or "particle in a box"):
+
+$$
+V(x,y,z) = \left\{
+\begin{aligned}
+0, & x, y, z \,\,\,\textrm{all between 0 and }a;\\
+\infty, & \textrm{otherwise}
+\end{aligned}
+\right.
+$$
+
+(a) Find the stationary states, and the corresponding energies.
+(b) Call the distinct energies $E_1, E_2, E_3,\,\dots$, in order of increasing energy. Find $E_1$, $E_2$, $E_3$, $E_4$, $E_5$, and $E_6$. Determine their degeneracies (that is, the number of different states that share the same energy). *Comment:* In one dimension degenerate bound states do not occur (see Problem 2.44), but in three dimensions they are very common.\
+(c) What is the degeneracy of $E_{14}$, and why is this case interesting?
+
+### Solution (4.2)
+\color{Blue}
+
+(a) $\psi_{n_x, n_y, n_z} = \sqrt{8/a^3} \sin \frac{n_x \pi x}{a}\sin \frac{n_y \pi y}{a}\sin \frac{n_z \pi z}{a}\quad$ and $\quad E_{n_x, n_y, n_z} = \frac{\hbar^2 \pi^2}{2ma^2}(n_x^2 + n_y^2 + n_z^2) = (n_x^2 + n_y^2 + n_z^2)E_1^\infty$.\
+(b) Expressing energies $E_n$ in units of $E_1^\infty = \frac{\hbar^2 \pi^2}{2ma^2}$: 
+
+$$
+E_1 = 3, \quad E_2 = 6, \quad E_3 = 9, \quad E_4 = 11, \quad E_5 = 12, \quad E_6 = 14.
+$$
+
+Degeneracies (number of states with the same energy):
+
+$$
+d_1 = 1, \quad d_2 = 3, \quad d_3 = 3, \quad d_4 = 3, \quad d_5 = 1, \quad E_6 = 6.
+$$
+
+(c) $d_14 = 4$ whereas normally we expect $1$ ($n_x = n_y = n_z$), $3$ (only two quantum numbers the same), $6$ (all three quantum numbers different $n_x \neq n_y \neq n_z$) from combinatorial reasoning. Check for yourself why this is.
+
+
+## Problem 4.5
+\color{Black}
+
+Problem 4.5 Show that
+
+$$
+\Theta(\theta) = A \ln[\tan(\theta/2)]
+$$
+
+satisfies the $\theta$ equation (Equation 4.25), for $l = m = 0$. This is the unacceptable "second
+solution"---what's wrong with it?
+
+### Solution (4.5)
+\color{Blue}
+
+$\Theta$ blows up at $\theta = 0$ and $\theta = \pi$: $\Theta(\theta) \rightarrow \infty$ and $\Theta(\pi) \rightarrow \infty$. (show this)
+
+## Problem 4.15
+\color{Black}
+
+(a) Find $\langle r \rangle$ and $\langle r^2 \rangle$ for an electron in the ground state of hydrogen. Express your answers in terms of the Bohr radius.\
+(b) Find $\langle x \rangle$ and $\langle x^2 \rangle$ for an electron in the ground state of hydrogen. Hint: This requires no new integration—note that $r^2 = x^2 + y^2 + z^2$, and exploit the symmetry of the ground state.\
+(c) Find $\langle x^2 \rangle$ in the state $n = 2, l = 1, m = 1$. *Hint:* this state is not symmetrical in $x, y, z$. Use $x = r \sin \theta \cos \phi$.
+
+### Solution (4.15)
+\color{Blue}
+
+(a) $\langle r \rangle = \frac{3}{2} a$ and $\langle r^2 \rangle = 3 a^2$.\
+(b) $\langle x \rangle = 0$ and $\langle x^2 \rangle = a^2$.\
+(c) $\langle x^2 \rangle = 12 a^2$.
+
+## Problem 4.17
+\color{Black}
+
+Calculate $\langle z \hat{H} z \rangle$, in the ground state of hydrogen. *Hint:* This takes two pages
+and six integrals, or four lines and no integrals, depending on how you set it up. To do it
+the quick way, start by noting that $[z, [\hat{H}, z]] = 2 z \hat{H} z − \hat{H} z^2 − z^2 \hat{H}$. The idea is to reorder the operators in such a way that $\hat{H}$ appears either to the left or to the right, because we know (of course) what $\hat{H} \psi_{100}$ is.
+
+### Solution (4.17)
+\color{Blue}
+
+$\langle z \hat{H} z \rangle = 0$.
+
+## Problem 4.19
+\color{Black}
+
+A hydrogenic atom consists of a single electron orbiting a nucleus with $Z$ protons. ($Z = 1$ would be hydrogen itself, $Z = 2$ is ionized helium, $Z = 3$ is doubly ionized lithium, and so on.) Determine the Bohr energies $E_n(Z)$, the binding energy $E_1(Z)$,
+the Bohr radius $a(Z)$, and the Rydberg constant $R(Z)$ for a hydrogenic atom. (Express your answers as appropriate multiples of the hydrogen values.) Where in the electromagnetic spectrum would the Lyman series fall (figure 4.10), for $Z = 2$ and $Z = 3$? *Hint:* There’s nothing
+much to calculate here—in the potential (Equation 4.52) $e^2 \longrightarrow Z e^2$, so all you have to do is make the same substitution in all the final results.
+
+### Solution (4.19)
+\color{Blue}
+
+Bohr energies $E_n(Z) = Z^2 E_n$,\
+Binding energy $E1(Z) = Z^2 E_1$,\
+Bohr radius $a(Z) = a/Z$,\
+Rydberg constant $R(Z) = Z^2 R$.\ 
+The Lyman series for $Z = 2$ falls in: $\lambda \in [22.8, 30.4]$ nm (ultraviolet).\
+The Lyman series for $Z = 3$ falls in: $\lambda \in [10.1, 13.5]$ nm (also ultraviolet).\
+
+
+## Problem 4.21
+\color{Black}
+
+The raising and lowering operators change the value of m by one unit:
+
+$$
+L_+ f_l^m = \left(A_l^{m}\right) f_l^{m+1}, \qquad L_- f_l^m = \left(B_l^{m}\right) f_l^{m-1}
+$$
+
+where $A_l^m$ and $B_l^m$ are constants. Question: What are they, if the eigenfunctions are to be
+normalized? Hint: First show that $L_\mp$ is the hermitian conjugate of $L_\pm$ (since $L_x$ and $L_y$
+are observables, you may assume they are hermitian ... but prove it if you like); then use
+Equation 4.112. Answer:
+
+$$
+\begin{aligned}
+A^m_l &= \hbar \sqrt{l(l+1) - m(m+1)} = \hbar \sqrt{(l-m)(l+m+1)},\\
+B^m_l &= \hbar \sqrt{l(l+1) - m(m-1)} = \hbar \sqrt{(l+m)(l-m+1)}.
+\end{aligned}
+$$
+
+Note what happens at the top and bottom of the ladder (i.e. when you apply $L_+$ to $f_l^l$ or
+$L_-$ to $f_{l}^{-l}$).
+
+### Solution (4.21)
+\color{Blue}
+
+Use Eq. 4.112: $L_\mp L_\pm = L^2 - L_z^2 \mp \hbar L_z$ and work out: $\langle f_l^m | L_\mp L_\pm f_l^m \rangle$ to obtain the norms squared $\langle L_+ f_l^m | L_+ f_l^m \rangle$ and $\langle L_- f_l^m | L_- f_l^m \rangle$.
+
+## Problem 4.25
+\color{Black}
+
+(a) What is $L_+ Y_l^l$? (No calculation allowed!)
+(b) Use the result of (a), together with Equation 4.130 and the fact that $L_z Y_l^l = \hbar l Y_l^l$,
+to determine $Y_l^l(\theta, \phi)$, up to a normalization constant.
+(c) Determine the normalization constant by direct integration. Compare your final
+answer to what you got in Problem 4.7.
+
+### Solution (4.25)
+\color{Blue}
+
+(a) $L_+ Y_l^l = 0$ (why is this?)\
+(b) $Y_l^l(\theta, \phi) = A \left( e^{i\phi} \sin\theta \right)$\
+(c) $A = \frac{(-1)^l}{2^{l+1}\,l!} \sqrt{\frac{(2l + 1)!}{\pi}}$.
+
+## Problem 4.26
+\color{Black}
+
+In Problem 4.4 you showed that
+
+$$
+Y^1_2(\theta, \phi) = -\sqrt{15/8\pi} \sin \theta \cos \theta \, e^{i\phi}.
+$$
+
+Apply the raising operator to find $Y_2^2(\theta, \phi)$. Use Equation 4.121 to get the normalization.
+
+### Solution (4.26)
+\color{Blue}
+
+$Y_2^2 = \frac{1}{4} \sqrt{\frac{15}{2\pi}} \left( e^{i\phi} \sin\theta \right)^2$.
+
+## Problem 4.30
+\color{Black}
+
+An electron is in the spin state
+
+$$
+\chi = A \begin{pmatrix} 3i \\ 4 \end{pmatrix}.
+$$
+
+(a) Determine the normalization constant A.\
+(b) Find the expectation values of $S_x$, $S_y$, and $S_z$.\
+(c) Find the "uncertainties" $\sigma_{S_x}$, $\sigma_{S_y}$, and $\sigma_{S_z}$. 
+Note: These sigmas are standard deviations, not Pauli matrices!\
+(d) Confirm that your results are consistent with all three uncertainty principles
+(Equation 4.100 and its cyclic permutations—only with $S$ in place of $L$, of course)
+
+### Solution (4.30)
+\color{Blue}
+
+(a) $A = 1/5$.\
+(b) $\langle S_x \rangle = 0$, $\langle S_y \rangle = -\frac{12}{25}\hbar$, and $\langle S_z \rangle = -\frac{7}{50}\hbar$.\
+(c) $\sigma_{S_x} = \frac{\hbar}{2}, \qquad \sigma_{S_y} = \frac{7}{50} \hbar, \qquad \sigma_{S_z} = \frac{12}{25} \hbar$.\
+(d) Example: $\sigma_{S_x}\sigma_{S_y} = \frac{\hbar}{2} \cdot \frac{7}{50} \hbar \geq \frac{\hbar}{2}|\langle S_x \rangle| = \frac{\hbar}{2} \cdot \frac{7}{50} \hbar$, i.e. right at the uncertainty limit.\
+
+Show that $\sigma_{S_y}\sigma_{S_z}$ and $\sigma_{S_z}\sigma_{S_x}$ also fullfil the uncertainty principle.
+
+## Problem 4.34
+\color{Black}
+
+Construct the spin matrices ($S_x$, $S_y$, and $S_z$) for a particle of spin 1. *Hint:*
+How many eigenstates of $S_z$ are there? Determine the action of $S_z$ , $S_+$, and $S_-$ on each of
+these states. Follow the procedure used in the text for spin $1/2$.
+
+### Solution (4.34)
+\color{Blue}
+
+If we choose the three spin states as:
+
+$$
+\chi_+ = \begin{pmatrix} 1 \\ 0 \\ 0 \\ \end{pmatrix}, \qquad 
+\chi_0 = \begin{pmatrix} 0 \\ 1 \\ 0 \\ \end{pmatrix}, \qquad 
+\chi_- = \begin{pmatrix} 0 \\ 0 \\ 1 \\ \end{pmatrix}, \qquad 
+$$
+
+Then we can write the spin matrices as:
+
+$$
+S_x = \frac{\hbar}{\sqrt{2}}\begin{pmatrix}
+0 & 1 & 0 \\
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+\end{pmatrix}, \qquad 
+S_y = \frac{i\hbar}{\sqrt{2}}\begin{pmatrix}
+0 & -1 & 0 \\
+1 & 0 & -1 \\
+0 & 1 & 0 \\
+\end{pmatrix}, \qquad 
+S_z = \hbar \begin{pmatrix}
+1 & 0 & 0 \\
+0 & 0 & 0 \\
+0 & 0 & -1 \\
+\end{pmatrix}. 
+$$
+
+
+## Problem 4.35
+\color{Black}
+
+In Example 4.3:
+
+(a) If you measured the component of spin angular momentum along the $x$ direction,
+at time $t$, what is the probability that you would get $+\hbar/2$?\
+(b) Same question, but for the $y$ component.\
+(c) Same, for the $z$ component.
+
+### Solution (4.35)
+\color{Blue}
+
+(a) $P_+^{(x)}(t) = \frac{1}{2} \left[ 1 + \sin\alpha \cos(\gamma B_0 t) \right]$.
+(b) $P_+^{(y)}(t) = \frac{1}{2} \left[ 1 - \sin\alpha \cos(\gamma B_0 t) \right]$.
+(c) $P_+^{(z)}(t) = \cos^2 \frac{\alpha}{2}$.
+
+## Problem 4.37
+\color{Black}
+
+(a) Apply $S_-$ to $|1 0 \rangle$ (Equation 4.175), and confirm that you get $\sqrt{2}\hbar|1 -1 \rangle$.
+(b) Apply $S_\pm$ to $|0 0 \rangle$ (Equation 4.176), and confirm that you get zero.
+(c) Show that $|1 1 \rangle$ and $|1 -1 \rangle$ (Equation 4.175) are eigenstates of $S^2$, with the
+appropriate eigenvalue.
+
+### Solution (4.37)
+\color{Blue}
+
+Applying operators $S_\pm$ to a state with two spins, e.g. $|\uparrow\uparrow\rangle$, can be split in applying one operator to the first spin and another one to the second one: $S_\pm = S^{(1)}_\pm + S^{(2)}_\pm$.\
+Consider the line above Eq. 4.146: $S_- |\uparrow\rangle = \hbar |\downarrow\rangle$ and $S_- |\downarrow\rangle = 0$.\
+
+
+## Problem 4.45
+\color{Black}
+
+(a) Derive Equation 4.199 from Equation 4.190.\
+(b) Derive Equation 4.211, starting with Equation 4.210.
+
+### Solution (4.45)
+\color{Blue}
+
+(a) Use the identities $\nabla \cdot \vec{A} = 0$ and $\varphi = 0$ (see comments after Eq. 4.198).\
+(b) Apply $(-i\hbar \nabla - q \vec{A})$ to both sides of Eq. 4.210.
+
+
+## Problem 4.52
+\color{Black}
+
+(a) Construct the spatial wave function ($\psi$) for hydrogen in the state $n = 3, l = 2,
+m = 1$. Express your answer as a function of $r$, $\theta$, $\phi$, and $a$ (the Bohr radius)
+only—no other variables ($ρ$, $z$, etc.) or functions ($Y$, $v$, etc.), or constants ($A$, $c_0$,
+etc.), or derivatives, allowed ($\pi$ is okay, and $e$, and $2$, etc.).
+(b) Check that this wave function is properly normalized, by carrying out the
+appropriate integrals over $r$, $\theta$, and $\phi$.
+(c) Find the expectation value of $r^s$ in this state. For what range of $s$ (positive and
+negative) is the result finite?
+
+### Solution (4.52)
+\color{Blue}
+
+(a) $\psi_{321} = -\frac{1}{\sqrt{\pi}} \frac{1}{81 a^{7/2} }\, r^2 e^{-r/3a} \sin\theta \cos\theta\, e^{i\phi}$.\
+(c) $\langle r^s \rangle = (s + 6)! \left( \frac{3a}{2} \right)^s \frac{1}{720}$ which is finite for $s > -7$.
+ 
+## Problem 4.53
+\color{Black}
+
+(a) Construct the wave function for hydrogen in the state $n = 4, l = 3, m = 3$.
+Express your answer as a function of the spherical coordinates $r$, $\theta$, and $\phi$.\
+(b) Find the expectation value of $r$ in this state. (As always, look up any nontrivial
+integrals.)\
+(c) If you could somehow measure the observable $L_x^2 + L_y^2$ on an atom in this
+state, what value (or values) could you get, and what is the probability of each?
+
+### Solution (4.53)
+\color{Blue}
+
+(a) $\psi_{433} = -\frac{1}{6144\sqrt{\pi} a^{9/2}} \, r^3 \, e^{-r/4a} \sin^2 \theta \, e^{i3\phi}$.\
+(b) $\langle r \rangle = 18a$.\
+(c) $L_x^2 +  L_y^2 = 3 \hbar^2$ with probability $1$.
+
+
+## Problem 4.54
+\color{Black}
+
+What is the probability that an electron in the ground state of hydrogen will
+be found inside the nucleus?\
+
+(a) First calculate the exact answer, assuming the wave function (Equation 4.80) is
+correct all the way down to $r = 0$. Let $b$ be the radius of the nucleus.\
+(b) Expand your result as a power series in the small number $\epsilon \equiv 2b/a$, and show that
+the lowest-order term is the cubic: $P \approx (4/3)\,(b/a)^3$. This should be a suitable
+approximation, provided that $b \ll a$ (which it is).\
+(c) Alternatively, we might assume that $\psi(r)$ is essentially constant over the (tiny)
+volume of the nucleus, so that $P\approx (4/3)\pi b^3 |\psi(0)|^2$. Check that you get the
+same answer this way.\
+(d) Use $b \approx 10^{−15}$ m and $a \approx 0.5 \times 10^{−10}$ m to get a numerical estimate for $P$. Roughly speaking, this represents the "fraction of its time that the electron spends
+inside the nucleus."
+
+### Solution (4.54)
+\color{Blue}
+
+(a) $P = 1 - \left( 1 + \frac{2b}{a} + 2 \frac{b^2}{a^2}\right) \, e^{-2b/a}$.\
+(b) $P = \frac{4}{3} \left(\frac{b}{a}\right)^3$.\
+(d) $P = 1.07 \times 10^{-14}$.\
+
+## Problem 4.58
+\color{Black}
+
+An electron is in the spin state
+
+$$
+\chi = A \begin{pmatrix} 1-2i \\ 2 \end{pmatrix}.
+$$
+
+(a) Determine the constant $A$ by normalizing $\chi$.\
+(b) If you measured $S_z$ on this electron, what values could you get, and what is the
+probability of each? What is the expectation value of $S_z$?\
+(c) If you measured $S_x$ on this electron, what values could you get, and what is the
+probability of each? What is the expectation value of $S_x$?\
+(d) If you measured $S_y$ on this electron, what values could you get, and what is the
+probability of each? What is the expectation value of $S_y$?
+
+### Solution (4.58)
+\color{Blue}
+
+(a) $A = 1/3$.\
+(b) $\frac{\hbar}{2}$ with probability $\frac{5}{9}$; $-\frac{\hbar}{2}$ with probability $\frac{4}{9}$.\
+$\langle S_z \rangle = \frac{\hbar}{18}$.\
+(c) $\frac{\hbar}{2}$ with probability $\frac{13}{18}$; $-\frac{\hbar}{2}$ with probability $\frac{5}{18}$.\
+$\langle S_x \rangle = \frac{2\hbar}{9}$.\
+(d) $\frac{\hbar}{2}$ with probability $\frac{17}{18}$; $-\frac{\hbar}{2}$ with probability $\frac{1}{18}$.\
+$\langle S_y \rangle = \frac{4\hbar}{9}$.\

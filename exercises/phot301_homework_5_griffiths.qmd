@@ -1,0 +1,318 @@
+---
+title: "PHOT 301: Quantum Photonics"
+subtitle: "Homework problems 5"
+author: "Michaël Barbier, Fall (2025-2026)"
+#date: today
+#date-format: long
+execute:
+  echo: true
+  output: true
+  warning: true
+  error: true
+  code-overflow: wrap
+  code:
+    font-size: 48px
+  code-line-numbers: true
+format: 
+  pdf:
+    include-in-header:
+      text:
+        \usepackage{amsfonts}
+        \usepackage{amsmath}
+        \DeclareMathOperator\erf{erf}
+    highlight-style: tango
+    documentclass: scrartcl
+    papersize: A4
+    fontsize: 12pt
+    margin-bottom: 2.5cm
+    margin-top: 2.5cm
+    margin-left: 2.5cm
+    margin-right: 2.5cm
+editor: source
+jupyter: python3
+---
+
+
+# Problems
+
+Here we list the problems with there final solutions so you can check whether you have the corrects answers. Some problems ask you to prove a theorem, for these problems, I write just some extra hints.
+The problems are from Griffiths 3rd edition. The problems for this week:
+
+- Chapter 3: 3.1, 3.4, 3.7, 3.10, 3.12, 3.14, 3.19, 3.25, 3.26, 3.33, 3.44
+
+
+## Problem 3.1
+\color{Black}
+
+(a) Show that the set of all square-integrable functions is a vector space (refer to Section A.1 for the definition). Hint: The main point is to show that the sum of two square-integrable functions is itself square-integrable. Use Equation 3.7. Is the set
+of all normalized functions a vector space?\
+(b) Show that the integral in Equation 3.6 satisfies the conditions for an inner product (Section A.2).
+
+### Solution (3.1)
+\color{Blue}
+
+(a) The set of all normalized functions does not form a vector space. Think about simple counter-examples: which normalized function represents the zero-vector? Is the sum of two normalized functions again a normalized function?
+(b) Use the fact that integration is a linear operation.
+
+
+## Problem 3.4
+\color{Black}
+
+(a) Show that the sum of two hermitian operators is hermitian.\
+(b) Suppose $\hat{Q}$ is hermitian, and $\alpha$ is a complex number. Under what condition (on $\alpha$)
+is $\alpha \hat{Q}$ hermitian?\
+(c) When is the product of two hermitian operators hermitian?\
+(d) Show that the position operator $\hat{x}$ and the Hamiltonian operator $\hat{H} = -\frac{\hbar^2}{2m} \frac{d^2}{dx^2} + V(x)$ are hermitian.
+
+### Solution (3.4)
+\color{Blue}
+
+(b) When $\alpha$ is real.\
+(c) The product of two operators $\hat{A} \hat{B}$ is hermitian when they commute: $[\hat{A}, \hat{B}] = 0$.\
+(d) To prove that $\langle \hat{H} f| g \rangle = \langle  f| \hat{H} g \rangle$, use integration by parts twice and make use of the fact that $f$ and $g$ are zero at $x = \pm\infty$ (the boundary integrals vanish).
+
+
+## Problem 3.7
+\color{Black}
+
+(a) Suppose that $f(x)$ and $g(x)$ are two eigenfunctions of an operator $\hat{Q}$, with the same
+eigenvalue $q$. Show that any linear combination of $f$ and $g$ is itself an eigenfunction of $\hat{Q}$, with eigenvalue $q$.
+(b) Check that $f(x) = \exp(x)$ and $g(x) = \exp(−x)$ are eigenfunctions of the operator $d^2/dx^2$, with the same eigenvalue. Construct two linear combinations of $f$ and $g$ that are orthogonal eigenfunctions on the interval $(−1,1)$.
+
+### Solution (3.7)
+\color{Blue}
+
+(a) Define $h(x) = a f(x) + b g(x)$ and start with $\hat{Q} h(x) = \hat{Q} (a f(x) + b g(x)) = \dots$.\
+(b) For the new orthogonal eigenfunctions: Try to make even and odd linear combinations.
+
+
+## Problem 3.10
+\color{Black}
+
+Is the ground state of the infinite square well an eigenfunction of momentum?
+If so, what is its momentum? If not, why not? [For further discussion, see Problem 3.34.]
+
+### Solution (3.10)
+\color{Blue}
+
+The ground state of the infinite square well is not an eigenfunction of the momentum operator.
+
+
+## Problem 3.12
+\color{Black}
+
+Find $\Phi(p,t)$ for the free particle in terms of the function $\phi(k)$ introduced in Equation 2.101. Show that for the free particle $|\Phi(p,t)|^2$ is independent of time. Comment: the time independence of $|\Phi(p,t)|^2$ for the free particle is a manifestation of momentum conservation in this system.
+
+### Solution (3.12)
+\color{Blue}
+
+Fill in $k = p/\hbar$ in Eq. 2.101 and identify $\Phi(p,t)$ from Eq. 3.55.
+
+
+## Problem 3.14
+\color{Black}
+
+(a) Prove the following commutator identities:
+
+$$
+\left[\hat{A} + \hat{B}, \hat{C}\right]
+= \left[\hat{A}, \hat{C}\right] + \left[\hat{B}, \hat{C}\right]
+$$
+
+$$
+\left[\hat{A} \hat{B}, \hat{C}\right]
+= \left[\hat{A}, \hat{B}\right] C + \left[\hat{A}, \hat{C}\right]\hat{B}
+$$
+
+(b) Show that
+
+$$
+[x^n, \hat{p}] = i\hbar n x^{n-1}
+$$
+
+(c) Show more generally that
+
+$$
+[f(x), \hat{p}] = i\hbar \frac{d f(x)}{dx},
+$$
+
+for any function $f(x)$ that admits a Taylor series expansion.
+
+(d) Show that for the simple harmonic oscillator:
+
+$$
+[\hat{H}, \hat{a}_\pm] = \pm \hbar \omega \hat{a}_\pm
+$$
+
+Hint: Use Equation 2.54.
+
+### Solution (3.14)
+\color{Blue}
+
+For (b) and (c) use a test function $g(x)$.
+
+For (d): Express the Hamiltonian with ladder operators, and afterwards make use of Eq. 2.56.
+
+
+## Problem 3.19
+\color{Black}
+
+Use Equation 3.73 (or Problem 3.18 (c) and (d)) to show that:\
+
+(a) For any (normalized) wave packet representing a free particle ($V (x)=0$), $\langle x \rangle$ moves at constant velocity (this is the quantum analog to Newton’s first law). Note: You showed this for a gaussian wave packet in Problem 2.42, but it is completely general.
+(b) For any (normalized) wave packet representing a particle in the harmonic oscillator potential $V(x)= \frac{1}{2} m \omega^2 x^2$, $\langle x \rangle$ oscillates at the classical frequency. Note:
+You showed this for a particular gaussian wave packet in Problem 2.49, but it is completely general.
+
+### Solution (3.19)
+\color{Blue}
+
+(a) From Eq. 1.38 (Ehrenfest’s theorem), one can show that $\langle \hat{p} \rangle$ should be a constant. Apply then the generalized Ehrenfest’s theorem in Eq. 3.73, with the position operator $\hat{Q} = \hat{x}$.\
+
+(b) In a similar manner as in (a) you can show that the expectation value for the position operator in an harmonic oscillator equals:
+
+$$
+\frac{d \langle x \rangle}{dx^2} = - \omega^2 \langle x \rangle
+$$
+
+with known oscillating solutions: $\langle x \rangle = A \sin(\omega t) + B \cos(\omega t)$
+
+## Problem 3.25
+\color{Black}
+
+The Hamiltonian for a certain two-level system is
+
+$$
+\hat{H} = \epsilon ( |1\rangle\langle 1| − |2\rangle\langle 2|+|1\rangle\langle 2|+|2\rangle\langle 1|),
+$$
+
+where $|1\rangle$, $|2\rangle$ is an orthonormal basis and $\epsilon$ is a number with the dimensions of energy.
+Find its eigenvalues and eigenvectors (as linear combinations of $|1\rangle$ and $|2\rangle$). What is the matrix $H$ representing $\hat{H}$ with respect to this basis?
+
+### Solution (3.25)
+\color{Blue}
+
+When using the vector representation in $\mathbb{R}^2$, we can write the orthonormal basis-vectors and the Hamiltonian matrix as follows: 
+
+$$
+H = \epsilon\,
+\begin{pmatrix}
+1 & 1\\
+1 & -1\\
+\end{pmatrix}, 
+\qquad |1\rangle = 
+\begin{pmatrix}
+1 \\ 0
+\end{pmatrix}, 
+\qquad |2\rangle = 
+\begin{pmatrix}
+0 \\ 1
+\end{pmatrix}
+$$
+
+Write the linear combinations as $|\psi\rangle = c_1 |1\rangle + c_2 |2\rangle$.\ 
+Eigenenergies $E = \pm\sqrt{2} \epsilon$ and eigenstates $|\psi_\pm\rangle = c_1 [ |1\rangle + (\pm\sqrt{2}-1 )|2\rangle]$
+
+## Problem 3.26
+\color{Black}
+
+Consider a three-dimensional vector space spanned by an orthonormal basis
+$|1\rangle$, $|2\rangle$, $|3\rangle$. Kets $|α\rangle$ and $|β\rangle$ are given by
+
+$$
+|α\rangle= i| 1\rangle − 2 |2\rangle − i| 3\rangle, \quad |β\rangle = i| 1\rangle + 2|3\rangle.
+$$
+
+(a) Construct $\langle α|$ and $\langle β|$ (in terms of the dual basis $\langle 1|$, $\langle 2|$, $\langle 3|$).
+(b) Find $\langle α|β \rangle$ and $〈β|α〉$, and confirm that $\langle β|α \rangle$ = $\langle α|β\rangle^*$.
+(c) Find all nine matrix elements of the operator $\hat{A} \equiv |α\rangle\langle β|$, in this basis, and construct
+the matrix $A$. Is it hermitian?
+
+### Solution (3.26)
+\color{Blue}
+
+(a) $\langle α| = −i\langle 1| − 2\langle2| + i\langle 3|; \quad \langle β| = −i\langle 1| + 2 \langle 3|$.\
+(b) $\langle α|β\rangle= 1 + 2i$ and $\langle β|α\rangle= 1 - 2i = \langle α|β\rangle^*$
+(c) The matrix $A$ is not Hermitian and is given by:
+
+$$
+\begin{pmatrix}
+1 & 0 & 2i\\
+2i & 0 & -4\\
+-1 & 0 & -2i\\
+\end{pmatrix}
+$$
+
+## Problem 3.33
+\color{Black}
+
+Sequential measurements. An operator $\hat{A}$, representing observable $A$, has
+two (normalized) eigenstates $ψ_1$ and $ψ_2$, with eigenvalues $a_1$ and $a_2$, respectively.
+Operator $\hat{B}$, representing observable $\hat{B}$, has two (normalized) eigenstates $φ_1$ and $φ_2$,
+with eigenvalues $b_1$ and $b_2$. The eigenstates are related by
+
+$$
+ψ_1 = (3 φ_1 + 4 φ_2) /5, \qquad ψ_2 = (4 φ_1 − 3 φ_2) /5.
+$$
+
+(a) Observable $A$ is measured, and the value $a_1$ is obtained. What is the state of the system (immediately) after this measurement?\
+(b) If $B$ is now measured, what are the possible results, and what are their probabilities?\
+(c) Right after the measurement of $B$, $A$ is measured again. What is the probability of getting $a_1$? (Note that the answer would be quite different if I had told you the outcome of the $B$ measurement.)
+
+### Solution (3.33)
+\color{Blue}
+
+(a) $\psi_1$\
+(b) $b_1$ with probability $9/25$, and $b_2$ with probability $16/25$.\
+(c) Probability to get $a_1$ right after the measurement of $B$: $\left(\frac{9}{25}\right)^2 + \left(\frac{16}{25}\right)^2 = \frac{337}{625}$.
+
+## Problem 3.44
+\color{Black}
+
+The Hamiltonian for a certain three-level system is represented by the matrix
+
+$$
+H = \begin{pmatrix}
+a & 0 & b\\
+0 & c & 0\\
+b & 0 & a\\
+\end{pmatrix}
+$$
+
+where $a$, $b$, and $c$ are real numbers.
+
+(a) If the system starts out in the state
+
+$$
+| S(0) \rangle = \begin{pmatrix}
+0 \\ 1 \\ 0
+\end{pmatrix},
+$$
+
+what is $|S(t)\rangle$?\
+
+(b) If the system starts out in the state
+
+$$
+| S(0) \rangle = \begin{pmatrix}
+1 \\ 0 \\ 0
+\end{pmatrix},
+$$
+
+what is $|S(t)\rangle$?
+
+### Solution (3.44)
+\color{Blue}
+
+(a) $|S(0)\rangle$ is an eigenvector and
+
+$$
+|S(t)\rangle = e^{-i c t/\hbar} 
+\begin{pmatrix}0\\1\\0\\ \end{pmatrix}.
+$$
+
+(b) $|S(0)\rangle$ is a combination of eigenvectors and
+
+$$
+|S(t)\rangle = e^{-i a t/\hbar} 
+\begin{pmatrix}\cos(bt/\hbar)\\0\\-i\sin(bt/\hbar)\\ \end{pmatrix}.
+$$
